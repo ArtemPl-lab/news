@@ -1,6 +1,7 @@
 const {Schema, model, Types} = require('mongoose')
 
 const schema = new Schema({
+    _id: Schema.Types.ObjectId,
     regularTitle : {
         type : String, 
         
@@ -14,8 +15,7 @@ const schema = new Schema({
     },
     siteTitle : {
         type : String
-    },
-    links: [{ type: Types.ObjectId, ref: "News" }]
+    }
 })
 
 module.exports = model('Resource', schema)

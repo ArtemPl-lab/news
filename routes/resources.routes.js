@@ -8,12 +8,15 @@ const auth = require('../middleware/auth.middleware')
 
 //api/resources/addResource
 
+module.exports = router;
+
 router.post('/addResource', auth, async (req, res) => {
     try {
         
         const {siteTitle, regularTitle, regularContent} = req.body
 
         const resource = new Resource({
+            _id: new mongoose.Types.ObjectId(),
             siteTitle, regularTitle, regularContent
         })
 

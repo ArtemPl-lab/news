@@ -1,6 +1,7 @@
-const {Schema, model} = require('mongoose')
+const {Schema, model, Types} = require('mongoose')
 
 const schema = new Schema({
+    _id: Schema.Types.ObjectId,
     newsTitle : {
         type : String,
         required : true
@@ -10,7 +11,11 @@ const schema = new Schema({
     },
     newsUrl : {
         type : String
-    }
+    },
+    added_at : {
+        type : Date
+    },
+    resource: [{ type: Types.ObjectId, ref: "Resource" }]
 })
 
 module.exports = model('News', schema)

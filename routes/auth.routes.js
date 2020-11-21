@@ -6,7 +6,7 @@ const router = Router()
 const bcrypt = require('bcrypt')
 const { PostAdd } = require('@material-ui/icons')
 
-
+module.exports = router;
 //Обработка авторизации
 
 //api/auth/login
