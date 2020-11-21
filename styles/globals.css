@@ -14,3 +14,17 @@ a {
 * {
   box-sizing: border-box;
 }
+.media{
+  height: 0;
+  padding-top: 56.25%;
+}
+.expandOpen{
+  transform: rotate(90deg);
+}
+.root{
+  flex-grow: 1;
+  margin-bottom: 30px;
+}
+.inputRoot{
+  color: inherit;
+}
