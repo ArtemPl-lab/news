@@ -5,13 +5,13 @@ import { useStore } from "mobx-store-provider";
 const PostPage  = () => {
     const router = useRouter();
     const { postsStore } = useStore();
-    const postContent = postsStore.posts.find(post => post.url === router.query.url);
+    const postContent = postsStore.posts.find(post => post.newsUrl === router.query.url);
     if(!postContent) return <p>dfgdfg</p>
     return (
         <Container>
-            <h1>{postContent.title}</h1>
+            <h1>{postContent.newsTitle}</h1>
             <p>{postContent.date}</p>
-            <p>{postContent.text}</p>
+            <p>{postContent.newsContent}</p>
         </Container>
     );
 }

@@ -44,13 +44,13 @@ const NewsCard = ({post}) => {
         }
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            <MoreVertIcon /> 
           </IconButton>
         }
-        title={post.title}
+        title={post.newsTitle}
         subheader={post.date}
       />
-      <Link href={`/postPage/${post.url}`}>
+      <Link href={`/postPage/${post.newsUrl}`}>
         <CardActionArea>
             <CardMedia 
                 className="media"
@@ -59,7 +59,7 @@ const NewsCard = ({post}) => {
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {post.text}
+                  {post.newsContent}
                 </Typography>
             </CardContent>
         </CardActionArea>

@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "back_start": "nodemon app.js" 
+    "back_start": "nodemon app.js"
   },
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.12.1",
     "@material-ui/core": "^4.11.0",
@@ -31,5 +32,8 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "http-proxy-middleware": "^1.0.6"
   }
 }
