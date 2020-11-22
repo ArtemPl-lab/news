@@ -1,8 +1,8 @@
 const {Router} = require('express')
 const Resource = require('../models/Resource')
 const router = Router()
-const bcrypt = require('bcrypt')
 const auth = require('../middleware/auth.middleware')
+const {sitemapCheck} = require('../includes/sitemap_check')
 
 //Добавление сайта 
 
@@ -13,16 +13,25 @@ module.exports = router;
 router.post('/addResource', auth, async (req, res) => {
     try {
         
-        const {siteTitle, regularTitle, regularContent} = req.body
+        const {regularTitle, 
+            sitemapLink, 
+            regularContent, 
+            siteTitle} = req.body
 
         const resource = new Resource({
             _id: new mongoose.Types.ObjectId(),
-            siteTitle, regularTitle, regularContent
+            regularTitle, 
+            sitemapLink, 
+            regularContent, 
+            siteTitle
         })
 
         await resource.save()
 
+        sitemapCheck(sitemapLink)
+
         res.status(201).json({ resource })
+
 
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })

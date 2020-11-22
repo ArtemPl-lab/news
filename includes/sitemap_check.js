@@ -1,9 +1,6 @@
 const Resource = require('../models/Resource')
 const News = require('../models/News')
-const {cyrillicToTranslit} = require('cyrillic-to-translit-js')
-const cheerio = require('cheerio')
 const axios = require('axios')
-const { response } = require('express')
 
 function sitemapCheck(sitemapLink) {
     try {
@@ -19,13 +16,36 @@ function sitemapCheck(sitemapLink) {
                 console.log(error)
             })
 
-        sitemapLinks = str.matchAll(/<loc>/g)
+        sitemapLinks = str.matchAll(/<loc>(.*?)<\/loc>/g)
 
         sitemapLinks = Array.from(sitemapLinks);
 
         for (let i = 0; i < length(sitemapLinks); i++) {
             if (!News.find({ newsUrl: sitemapLinks[i] })) {
                 
+                axios.get(sitemapLink)
+                .then(response => {
+                    siteHtml = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+                const newsTitle = str.match(/<title>(.*?)<\/title>/)
+                const newsContent = str.match(/<body>(.*?)<\/body>/)
+                const newsUrl = sitemapLinks[i]
+                const now = new Date
+
+                const news = new News({
+                    _id: new mongoose.Types.ObjectId(),
+                    newsTitle: newsTitle[1],
+                    newsContent: newsContent[1],
+                    newsUrl,
+                    now,
+                    resource: resource._id
+                })
+
+                await news.save()
             }
         }
 
