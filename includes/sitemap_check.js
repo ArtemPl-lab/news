@@ -1,39 +1,26 @@
 const Resource = require('../models/Resource')
 const News = require('../models/News')
 const axios = require('axios')
+const {cyrillicToTranslit} = require('cyrillic-to-translit-js')
 
 function sitemapCheck(sitemapLink) {
     try {
-        const resource = await Resource.find({sitemapLink: sitemapLink})
+        const resource = Resource.find({sitemapLink: sitemapLink})
 
-        let sitemapLinks
+        let sitemapLinks = await axios.get(sitemapLink)        
 
-        axios.get(sitemapLink)
-            .then(response => {
-                sitemapLinks = response.data
-            })
-            .catch(error => {
-                console.log(error)
-            })
-
-        sitemapLinks = str.matchAll(/<loc>(.*?)<\/loc>/g)
+        sitemapLinks = sitemapLinks.matchAll(/<loc>(.*?)<\/loc>/g)
 
         sitemapLinks = Array.from(sitemapLinks);
 
         for (let i = 0; i < length(sitemapLinks); i++) {
             if (!News.find({ newsUrl: sitemapLinks[i] })) {
                 
-                axios.get(sitemapLink)
-                .then(response => {
-                    siteHtml = response.data
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-
-                const newsTitle = str.match(/<title>(.*?)<\/title>/)
-                const newsContent = str.match(/<body>(.*?)<\/body>/)
-                const newsUrl = sitemapLinks[i]
+                let siteHtml = axios.get(sitemapLink)
+                
+                const newsTitle = siteHtml.match(/<title>(.*?)<\/title>/)
+                const newsContent = siteHtml.match(/<body>(.*?)<\/body>/)
+                const newsUrl = cyrillicToTranslit().transform(newsTitle.toLowerCase(),"-") 
                 const now = new Date
 
                 const news = new News({
