@@ -1,15 +1,19 @@
+import { Container } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import Header from '../../components/Header';
-
+import { observer } from 'mobx-react';
+import { useStore } from "mobx-store-provider";
 const PostPage  = () => {
     const router = useRouter();
-    console.log(router);
+    const { postsStore } = useStore();
+    const postContent = postsStore.posts.find(post => post.url === router.query.url);
+    if(!postContent) return <p>dfgdfg</p>
     return (
-        <>
-            <Header />
-            <h1>{router.query.url}</h1>
-        </>
+        <Container>
+            <h1>{postContent.title}</h1>
+            <p>{postContent.date}</p>
+            <p>{postContent.text}</p>
+        </Container>
     );
 }
 
-export default PostPage;
+export default observer(PostPage);

@@ -10,12 +10,12 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { CardActionArea } from '@material-ui/core';
+import Link from 'next/link'
 const useStyles = makeStyles((theme) => ({
   expand: {
     transform: 'rotate(0deg)',
@@ -50,20 +50,20 @@ const NewsCard = ({post}) => {
         title={post.title}
         subheader={post.date}
       />
-      <CardActionArea>
-        <a href={`/postPage/${post.url}`}>
-          <CardMedia 
-              className="media"
-              image="https://material-ui.com/static/images/cards/paella.jpg"
-              title="Paella dish"
-          />
-          <CardContent>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {post.text}
-              </Typography>
-          </CardContent>
-        </a>
-      </CardActionArea>
+      <Link href={`/postPage/${post.url}`}>
+        <CardActionArea>
+            <CardMedia 
+                className="media"
+                image="https://material-ui.com/static/images/cards/paella.jpg"
+                title="Paella dish"
+            />
+            <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {post.text}
+                </Typography>
+            </CardContent>
+        </CardActionArea>
+      </Link>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
