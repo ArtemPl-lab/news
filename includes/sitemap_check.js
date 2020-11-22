@@ -16,14 +16,8 @@ function sitemapCheck(sitemapLink) {
         for (let i = 0; i < length(sitemapLinks); i++) {
             if (!News.find({ newsUrl: sitemapLinks[i] })) {
                 
-                axios.get(sitemapLink)
-                .then(response => {
-                    siteHtml = response.data
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-
+                let siteHtml = axios.get(sitemapLink)
+                
                 const newsTitle = siteHtml.match(/<title>(.*?)<\/title>/)
                 const newsContent = siteHtml.match(/<body>(.*?)<\/body>/)
                 const newsUrl = cyrillicToTranslit().transform(newsTitle.toLowerCase(),"-") 
