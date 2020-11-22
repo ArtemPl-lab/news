@@ -13,8 +13,8 @@ class PostsStore {
         })
     });
     const json = await response.json();
-    this.posts.push(json[0]);
-    console.log(this.posts);
+    let concatPosts = this.posts.concat(json);
+    this.posts = [...new Set(concatPosts.map(JSON.stringify))].map(JSON.parse);
   }
 }
 const postsStore = new PostsStore();
