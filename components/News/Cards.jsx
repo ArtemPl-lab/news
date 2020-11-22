@@ -13,6 +13,7 @@ const Cards = () => {
             </Grid>
           ))}
         </Grid>
+        <button onClick={()=>postsStore.loadPosts()}>Загрузить Посты</button>
     </Container>
     );
 }

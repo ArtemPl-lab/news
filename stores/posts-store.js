@@ -24,8 +24,18 @@ class PostsStore {
   constructor() {
     makeAutoObservable(this)
   }
-  loadPosts(){
-
+  async loadPosts(){
+    const response = await fetch('/api/news/news',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+            page: this.page
+        })
+    });
+    const json = await response.json();
+    console.log(json);
   }
 }
 const postsStore = new PostsStore();

@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import { observer } from "mobx-react";
 import { useStore } from "mobx-store-provider";
+import Link from 'next/link';
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
@@ -72,7 +73,9 @@ const Header = () => {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Новости.ру
+            <Link href="/">
+              Новости.ру
+            </Link>
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
