@@ -1,39 +1,19 @@
 import { Container, Grid } from "@material-ui/core";
 import NewsCard from "./NewsCard";
+import { observer } from 'mobx-react';
+import { useStore } from "mobx-store-provider";
 const Cards = () => {
-
+    const { postsStore } = useStore();
     return(
     <Container>
         <Grid spacing={3} container>
-          <Grid item xs={12} md={3} sm={6}>
-            <NewsCard />
-          </Grid>
-          <Grid item xs={12} md={3} sm={6}>
-            <NewsCard />
-          </Grid>
-          <Grid item xs={12} md={3} sm={6}>
-            <NewsCard />
-          </Grid>
-          <Grid item xs={12} md={3} sm={6}>
-            <NewsCard />
-          </Grid>
-          <Grid item xs={12} md={3} sm={6}>
-            <NewsCard />
-          </Grid>
-          <Grid item xs={12} md={3} sm={6}>
-            <NewsCard />
-          </Grid>
-          <Grid item xs={12} md={3} sm={6}>
-            <NewsCard />
-          </Grid>
-          <Grid item xs={12} md={3} sm={6}>
-            <NewsCard />
-          </Grid>
-          <Grid item xs={12} md={3} sm={6}>
-            <NewsCard />
-          </Grid>
+          {postsStore.posts.map(post => (
+            <Grid item xs={12} md={3} sm={6} key={post.url}>
+              <NewsCard post={post}/>
+            </Grid>
+          ))}
         </Grid>
     </Container>
     );
 }
-export default Cards;
+export default observer(Cards);

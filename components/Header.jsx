@@ -5,12 +5,11 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import NavigationPanel from './NavigationPanel';
+import MenuIcon from '@material-ui/icons/Menu';
+import IconButton from '@material-ui/core/IconButton';
+import { observer } from "mobx-react";
+import { useStore } from "mobx-store-provider";
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    marginBottom: "30px"
-  },
   title: {
     flexGrow: 1,
     display: 'none',
@@ -41,9 +40,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  inputRoot: {
-    color: 'inherit',
-  },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -61,23 +57,31 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
   const classes = useStyles();
-
+  const { menu } = useStore();
   return (
-    <div className={classes.root}>
+    <div className="root">
       <AppBar position="static">
         <Toolbar>
-          <NavigationPanel />
+        <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="open drawer"
+                onClick={()=>menu.togglePanel()}
+          >
+            <MenuIcon />
+          </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+            Новости.ру
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Поиск…"
               classes={{
-                root: classes.inputRoot,
+                root: "inputRoot",
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
@@ -89,4 +93,4 @@ const Header = () => {
   );
 }
 
-export default Header;
+export default observer(Header);

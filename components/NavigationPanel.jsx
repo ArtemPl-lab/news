@@ -11,6 +11,10 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
+import menuStore from '../stores/menu-store';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { observer } from "mobx-react";
+import { useStore } from "mobx-store-provider";
 const useStyles = makeStyles((theme)=>({
   list: {
     width: 250,
@@ -25,20 +29,7 @@ const useStyles = makeStyles((theme)=>({
 
 const NavigationPanel = ({}) => {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
+  const { menu } = useStore();
 
   const list = (anchor) => (
     <div
@@ -46,16 +37,14 @@ const NavigationPanel = ({}) => {
         [classes.fullList]: anchor === 'top' || anchor === 'bottom',
       })}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={()=>menu.closePanel()}
+      onKeyDown={()=>menu.closePanel()}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button>
+          <ListItemIcon><FavoriteIcon /></ListItemIcon>
+          <ListItemText primary="Понравившееся" />
+        </ListItem>
       </List>
       <Divider />
       <List>
@@ -72,20 +61,11 @@ const NavigationPanel = ({}) => {
   return (
     <div>
         <React.Fragment>
-            <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="open drawer"
-                onClick={toggleDrawer('left', true)}
-            >
-            <MenuIcon />
-          </IconButton>
-          <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
+          <Drawer anchor={'left'} open={menu.show} onClose={()=>menu.closePanel()}>
             {list('left')}
           </Drawer>
         </React.Fragment>
     </div>
   );
 }
-export default NavigationPanel;
+export default observer(NavigationPanel);
