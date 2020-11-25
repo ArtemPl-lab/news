@@ -3,14 +3,12 @@ var needle = require('needle');
 class SitemapParser{
     constructor(
         sitemapAddress = "",
-        stepCallback = () => {},
-        endCallback = () => {}
+        stepCallback = () => {}
     )
     {
         this.sitemapAddress = sitemapAddress;
         this.stepNumber = 0;
         this.stepCallback = stepCallback;
-        this.endCallback = endCallback;
         this.stack = [];
     }
     parseSitemapToSet(sitemapObj, sitemapSet){
@@ -40,10 +38,8 @@ class SitemapParser{
     async startParse(){
         await this.parseSitemap(this.sitemapAddress);
         this.stack = [...new Set(this.stack)];
-        this.endCallback(this.stack);
         return this.stack;
     }
 }
 
-let parser = new SitemapParser("https://www.forbes.ru/sitemap.xml", console.log);
-parser.startParse();
+module.exports = SitemapParser;

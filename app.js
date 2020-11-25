@@ -18,7 +18,7 @@ app.use('/api/resources', require('./routes/resources.routes.js'))
 
 
 
-const PORT = config.get('port') || 5000
+const PORT = 5000
 
 
 async function start() {
