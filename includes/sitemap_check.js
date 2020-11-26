@@ -1,28 +1,50 @@
 var needle = require('needle');
 
+const News = require('../models/News')
 const SitemapParser = require('./SitemapParser');
 const PageParser = require('./HtmlPageParser');
 
-let sitemapParser = new SitemapParser('https://www.forbes.ru/sitemap.xml', console.log);
+function sitemapCheck(sitemapLink, regularTitle, regularContent, checkingPeriod, id) {
 
-let pageParser = new PageParser({
-    title: 'h1.title',
-    body: '.all-body',
-    img: 'img'
-});
+    let sitemapParser = new SitemapParser(sitemapLink, console.log);
 
-const getAndParsePage = async link => {
-    let { body: htmlPage } = await needle("get", link);
-    return pageParser.startParse(htmlPage);
-}
+    let pageParser = new PageParser({
+        title: regularTitle,
+        body: regularContent,
+        img: 'img'
+    });
 
-async function startParsing(){
-    let sitemapLinks = await sitemapParser.startParse();
-    for(let i = 0; i < sitemapLinks.length; i++){
-        console.log(`Страница ${i} из ${sitemapLinks.length}`);
-        let pageContent = await getAndParsePage(sitemapLinks[i]);
-        console.log(pageContent);
+    let getAndParsePage = async link => {
+        let { body: htmlPage } = await needle("get", link);
+        return pageParser.startParse(htmlPage);
     }
-}
 
+    async function startParsing(){
+        let sitemapLinks = await sitemapParser.startParse();
+        for(let i = 0; i < sitemapLinks.length; i++){
+            if (!News.find({ newsUrl : sitemapLinks[i] })) {
+                let pageContent = await getAndParsePage(sitemapLinks[i]);
+
+                let now = new Date
+
+                let news = new News ({
+                    _id: new mongoose.Types.ObjectId(),
+                    newsTitle : pageContent.title,
+                    newsContent : pageContent.body,
+                    newsUrl : sitemapLinks[i],
+                    now,
+                    resource_id : id
+                })
+
+                await news.save()
+            }
+            
+        }
+    }
+
+<<<<<<< HEAD
 // startParsing();
+=======
+    startParsing();
+}
+>>>>>>> d9b55d248c872e3949d5c1e590aca94d484eea1e

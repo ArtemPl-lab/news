@@ -15,6 +15,9 @@ const schema = new Schema({
     },
     siteTitle : {
         type : String
+    },
+    checkingPeriod : {
+        type : Number
     }
 })
 
