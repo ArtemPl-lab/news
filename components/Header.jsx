@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { observer } from "mobx-react";
 import { useStore } from "mobx-store-provider";
 import Link from 'next/link';
-import { Alert, AlertTitle } from '@material-ui/lab';
+
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
@@ -93,10 +93,6 @@ const Header = () => {
           </div>
         </Toolbar>
       </AppBar>
-      <Alert variant="filled" severity="warning">
-        <AlertTitle>Warning</AlertTitle>
-        This is a warning alert — <strong>check it out!</strong>
-      </Alert>
     </div>
   );
 }

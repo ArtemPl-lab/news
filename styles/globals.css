@@ -28,3 +28,10 @@ a {
 .inputRoot{
   color: inherit;
 }
+.add-title-field{
+  margin-bottom: 30px !important;
+  width: 100% !important;
+}
+.btn-sub-add{
+  margin-top: 30px !important;
+}

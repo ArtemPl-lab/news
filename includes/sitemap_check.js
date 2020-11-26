@@ -25,4 +25,4 @@ async function startParsing(){
     }
 }
 
-startParsing();
+// startParsing();

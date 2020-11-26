@@ -28,10 +28,12 @@ const useNav = isAdmin => {
                             <ListItemText primary="Главная" />
                         </ListItem>
                     </Link>
-                    <ListItem button>
-                        <ListItemIcon><AddBoxIcon /></ListItemIcon>
-                        <ListItemText primary="Добавить новость" />
-                    </ListItem>
+                    <Link href="/post/add">
+                        <ListItem button>
+                            <ListItemIcon><AddBoxIcon /></ListItemIcon>
+                            <ListItemText primary="Добавить новость" />
+                        </ListItem>
+                    </Link>
                     <ListItem button>
                         <ListItemIcon><AttachFileIcon /></ListItemIcon>
                         <ListItemText primary="Закреплённые" />
