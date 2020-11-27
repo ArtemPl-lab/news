@@ -1,6 +1,6 @@
 {
     "port": 3000,
     "jwtSecret": "news really hard jwt secret",
-    "mongoUri": "mongodb+srv://NewsAdmin:bdx-FMa-KH8-TM4@cluster0.pdmif.mongodb.net/news",
+    "mongoUri": "mongodb+srv://NewsAdmin:bdx-FMa-KH8-TM4@cluster0.pdmif.mongodb.net/news?retryWrites=true&w=majority",
     "baseUrl": "http://localhost:5000"
 }

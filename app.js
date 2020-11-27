@@ -8,8 +8,6 @@ const config = require('config')
 
 
 
-
-
 //Подключаем роуты 
 
 
@@ -37,6 +35,7 @@ async function start() {
         app.listen(PORT, () => {
             console.log(`App started on PORT ${PORT}`);
         })
+        
     } catch(e) {
         console.log('Server Error', e.message)
         process.exit(1)

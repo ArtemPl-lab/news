@@ -2,8 +2,13 @@ const {Router} = require('express')
 const Resource = require('../models/Resource')
 const router = Router()
 const auth = require('../middleware/auth.middleware')
+<<<<<<< HEAD
 const {sitemapCheck} = require('../includes/sitemap_check')
 const firstCheck = require('../firstCheck');
+=======
+const {parseIntoBd} = require('../includes/parseIntoBd')
+
+>>>>>>> 60a1d7e45f38b79e85dbb59789763198eb79dbd7
 //Добавление сайта 
 
 //api/resources/addResource
@@ -28,10 +33,14 @@ router.post('/addResource', auth, async (req, res) => {
 
         await resource.save()
 
+<<<<<<< HEAD
         const socket = await firstCheck(sitemapLink, {
             regularTitle,
             regularContent
         });
+=======
+        parseIntoBd(sitemapLink)
+>>>>>>> 60a1d7e45f38b79e85dbb59789763198eb79dbd7
 
         res.status(201).json({ socket })
 
