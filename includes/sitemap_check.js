@@ -41,10 +41,5 @@ function sitemapCheck(sitemapLink, regularTitle, regularContent, checkingPeriod,
             
         }
     }
-
-<<<<<<< HEAD
-// startParsing();
-=======
     startParsing();
 }
->>>>>>> d9b55d248c872e3949d5c1e590aca94d484eea1e

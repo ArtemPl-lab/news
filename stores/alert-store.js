@@ -13,6 +13,9 @@ class AlertStore {
     this.type = options.type || "warning";
     this.alertShow = true;
   }
+  setText(text){
+    this.alertText = text;
+  }
   hideAlert(){
       this.alertShow = false;
   }

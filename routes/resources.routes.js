@@ -3,7 +3,7 @@ const Resource = require('../models/Resource')
 const router = Router()
 const auth = require('../middleware/auth.middleware')
 const {sitemapCheck} = require('../includes/sitemap_check')
-
+const firstCheck = require('../firstCheck');
 //Добавление сайта 
 
 //api/resources/addResource
@@ -28,9 +28,12 @@ router.post('/addResource', auth, async (req, res) => {
 
         await resource.save()
 
-        sitemapCheck(sitemapLink)
+        const socket = await firstCheck(sitemapLink, {
+            regularTitle,
+            regularContent
+        });
 
-        res.status(201).json({ resource })
+        res.status(201).json({ socket })
 
 
     } catch (e) {
