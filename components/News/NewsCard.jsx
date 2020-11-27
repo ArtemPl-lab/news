@@ -59,7 +59,7 @@ const NewsCard = ({post}) => {
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {post.newsContent}
+                  {post.tabDesc}
                 </Typography>
             </CardContent>
         </CardActionArea>

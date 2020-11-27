@@ -14,7 +14,7 @@ router.post('/createNews', auth, async (req, res) => {
         
         const {newsTitle, newsContent, resource_id, tabTitle, tabDesc, longDesc} = req.body
 
-        newsUrl = cyrillicToTranslit().transform(newsTitle.toLowerCase(),"-")
+        
 
         const now = new Date
 
@@ -48,8 +48,9 @@ router.post('/news', async (req, res) => {
     try {
         
         const {page} = req.body
+        console.log(page);
         const news = await News.find().skip((page-1)*10).limit(10)
-        res.status(200).json(news)
+        res.status(200).json({...news, page})
 
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })

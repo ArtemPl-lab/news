@@ -1,10 +1,22 @@
+
+
 var WebSocketServer = require('websocket').server;
 var http = require('http');
 var needle = require('needle');
+const cyrillicToTranslit = require('cyrillic-to-translit-js');
+const mongoose = require('mongoose')
+const config = require('config')
 
+const News = require('./models/News');
 const SitemapParser = require('./includes/SitemapParser');
 const PageParser = require('./includes/HtmlPageParser');
 
+
+mongoose.connect(config.get("mongoUri"), {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true,
+    useCreateIndex: true
+})
 var server = http.createServer(function(request, response) {
     console.log((new Date()) + ' Received request for ' + request.url);
     response.writeHead(404);
@@ -27,7 +39,7 @@ let getAndParsePage = async (link, pageParser) => {
 }
 
 
-async function firstCheck(sitemapLink, selectors){
+async function firstCheck(sitemapLink, selectors, resourse){
     const sitemapParser = new SitemapParser(sitemapLink, stepCallback);
     const pageParser = new PageParser(selectors);
 
@@ -42,7 +54,25 @@ async function firstCheck(sitemapLink, selectors){
     });
     const sitemap = await sitemapParser.startParse();
     for(let link of sitemap){
-        console.log(await getAndParsePage(link, pageParser));
+        const news = await getAndParsePage(link, pageParser);
+
+        if(news.title){
+            const newsUrl = cyrillicToTranslit().transform(news.title.toLowerCase(),"-");
+            const page = new News({
+                _id: new mongoose.Types.ObjectId(),
+                newsTitle: news.title,
+                newsContent: news.content,
+                newsUrl,
+                added_at: String(new Date),
+                tabTitle: news.title,
+                tabDesc: news.content.slice(0, 100)+"...",
+                longDesc: news.content.slice(0, 300)+"...",
+                // resource: 
+            });
+            console.log(page);
+            console.log(await page.save());
+        }
+        // console.log(page);
     }
 }
 

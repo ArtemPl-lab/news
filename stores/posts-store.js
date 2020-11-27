@@ -15,6 +15,7 @@ class PostsStore {
     const json = await response.json();
     let concatPosts = this.posts.concat(json);
     this.posts = [...new Set(concatPosts.map(JSON.stringify))].map(JSON.parse);
+    this.page++;
   }
 }
 const postsStore = new PostsStore();

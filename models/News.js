@@ -23,8 +23,8 @@ const news = new Schema({
     },
     longDesc : {
         type : String
-    },
-    resource: [{ type: Types.ObjectId, ref: "Resource" }]
+    }
+    // resource: [{ type: Types.ObjectId, ref: "Resource" }]
 })
 
 module.exports = model('News', news)

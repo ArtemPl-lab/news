@@ -22,7 +22,7 @@ app.use('/api/auth', require('./routes/auth.routes.js'))
 app.use('/api/resources', require('./routes/resources.routes.js'))
 
 
-const PORT = 8000
+const PORT = 5000
 
 
 async function start() {
