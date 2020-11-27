@@ -24,6 +24,7 @@ var server = http.createServer(function(request, response) {
 });
 let connections = [];
 const stepCallback = (logger) => {
+    
     connections.map(connection => {
         connection.sendUTF(JSON.stringify({
             title: "Парсинг sitemap",
@@ -67,12 +68,9 @@ async function firstCheck(sitemapLink, selectors, resourse){
                 tabTitle: news.title,
                 tabDesc: news.content.slice(0, 100)+"...",
                 longDesc: news.content.slice(0, 300)+"...",
-                // resource: 
             });
-            console.log(page);
-            console.log(await page.save());
+            await page.save();
         }
-        // console.log(page);
     }
 }
 
