@@ -1,6 +1,6 @@
 const {Schema, model, Types} = require('mongoose')
 
-const schema = new Schema({
+const resources = new Schema({
     _id: Schema.Types.ObjectId,
     regularTitle : {
         type : String, 
@@ -21,4 +21,4 @@ const schema = new Schema({
     }
 })
 
-module.exports = model('Resource', schema)
+module.exports = model('Resource', resources)

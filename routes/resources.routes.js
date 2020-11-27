@@ -2,7 +2,7 @@ const {Router} = require('express')
 const Resource = require('../models/Resource')
 const router = Router()
 const auth = require('../middleware/auth.middleware')
-const {sitemapCheck} = require('../includes/sitemap_check')
+const {parseIntoBd} = require('../includes/parseIntoBd')
 
 //Добавление сайта 
 
@@ -28,7 +28,7 @@ router.post('/addResource', auth, async (req, res) => {
 
         await resource.save()
 
-        sitemapCheck(sitemapLink)
+        parseIntoBd(sitemapLink)
 
         res.status(201).json({ resource })
 

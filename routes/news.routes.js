@@ -12,7 +12,7 @@ module.exports = router;
 router.post('/createNews', auth, async (req, res) => {
     try {
         
-        const {newsTitle, newsContent, resource_id} = req.body
+        const {newsTitle, newsContent, resource_id, tabTitle, tabDesc, longDesc} = req.body
 
         newsUrl = cyrillicToTranslit().transform(newsTitle.toLowerCase(),"-")
 
@@ -24,6 +24,9 @@ router.post('/createNews', auth, async (req, res) => {
             newsContent,
             newsUrl,
             now,
+            tabTitle,
+            tabDesc,
+            longDesc,
             resource_id
         })
 
@@ -60,7 +63,7 @@ router.post('/news', async (req, res) => {
 router.post('/edit', async (req, res) => {
     try {
         
-        const {id, newsTitle, newsContent, newsUrl, added_at} = req.body
+        const {newsTitle, newsContent, newsUrl, resource_id, tabTitle, tabDesc, longDesc} = req.body
         const news = await News.find({_id: id})
         res.status(200).json(news)
 
