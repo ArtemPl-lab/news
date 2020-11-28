@@ -4,11 +4,12 @@ const router = Router()
 const auth = require('../middleware/auth.middleware')
 const firstCheck = require('../firstCheck');
 const mongoose = require('mongoose')
+
+module.exports = router;
+
 //Добавление сайта 
 
 //api/resources/addResource
-
-module.exports = router;
 
 router.post('/addResource', async (req, res) => {
     try {
@@ -16,16 +17,19 @@ router.post('/addResource', async (req, res) => {
         const {regularTitle, 
             sitemapLink, 
             regularContent, 
-            siteTitle} = req.body;
+            siteTitle,
+            checkingPeriod} = req.body;
         const resource = new Resource({
             _id: new mongoose.Types.ObjectId(),
             regularTitle, 
             sitemapLink, 
             regularContent, 
-            siteTitle
+            siteTitle,
+            checkingPeriod
         })
 
         await resource.save()
+
         firstCheck(sitemapLink, {
             title: regularTitle,
             content: regularContent
@@ -61,16 +65,24 @@ router.post('/resources', auth, async (req, res) => {
 
 //api/resources/edit
 
-router.post('/edit', async (req, res) => {
+router.post('/edit', auth, async (req, res) => {
     try {
         
-        const {id, regularTitle, sitemapLink, regularContent, siteTitle} = req.body
-        const resource = await Resource.find({_id: id})
-        res.status(200).json(resource)
+        const {id,
+            regularTitle, 
+            sitemapLink, 
+            regularContent, 
+            siteTitle,
+            checkingPeriod} = req.body
 
+        Resource.updateOne({_id: id}, {
+            regularTitle : regularTitle, 
+            sitemapLink : sitemapLink, 
+            regularContent : regularContent, 
+            siteTitle : siteTitle,
+            checkingPeriod : checkingPeriod})
 
-        Resource.updateOne({_id: id}, {regularTitle: regularTitle, sitemapLink: sitemapLink, regularContent: regularContent, siteTitle: siteTitle  })
-
+        res.status(200).json({ message: "Ресурс обновлён" })
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })
     }
@@ -80,11 +92,12 @@ router.post('/edit', async (req, res) => {
 
 //api/resources/page
 
-router.post('/page', async (req, res) => {
+router.post('/page', auth, async (req, res) => {
     try {
         
         const {id} = req.body
         const resource = await Resource.find({_id: id})
+
         res.status(200).json(resource)
 
     } catch (e) {
@@ -98,7 +111,7 @@ router.post('/page', async (req, res) => {
 
 //api/resources/delete
 
-router.post('/delete', async (req, res) => {
+router.post('/delete', auth, async (req, res) => {
     try {
         
         const {id} = req.body

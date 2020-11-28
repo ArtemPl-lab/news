@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const Resource = require("./models/Resource.js")
 const parseIntoBd = require("./includes/parseIntoBd.js")
 const config = require('config')
 
@@ -9,16 +8,22 @@ mongoose.connect(config.get("mongoUri"), {
     useCreateIndex: true
 })
 
-Resource.find({}, function(err, res) {
+const Resource = require("./models/Resource")
+
+Resource.find({checkingPeriod : {$ne : 0}}, function(err, res) {
     if (err) return console.log(err)
     
     console.log(res)
 
-    for (resource in res) {
-        setInterval(function() {
-            parseIntoBd(resource.sitemapLink, resource.regularTitle, resource.regularContent, resource._id)
-        }, 60000 * resource.checkingPeriod)  
+    try {
 
-        
+        for (resource in res) {
+            setInterval(function() {
+                parseIntoBd(resource)
+            }, 60000 * resource.checkingPeriod)  
+        }
+    }
+    catch(e) {
+        console.log(e);
     }
 })

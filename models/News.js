@@ -23,6 +23,12 @@ const news = new Schema({
     },
     longDesc : {
         type : String
+    },
+    visible : {
+        type : Boolean
+    },
+    pinned : {
+        type : Boolean
     }
     // resource: [{ type: Types.ObjectId, ref: "Resource" }]
 })
