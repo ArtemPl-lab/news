@@ -34,10 +34,12 @@ const useNav = isAdmin => {
                             <ListItemText primary="Добавить новость" />
                         </ListItem>
                     </Link>
-                    <ListItem button>
-                        <ListItemIcon><AttachFileIcon /></ListItemIcon>
-                        <ListItemText primary="Закреплённые" />
-                    </ListItem>
+                    <Link href="/anchored">
+                        <ListItem button>
+                            <ListItemIcon><AttachFileIcon /></ListItemIcon>
+                            <ListItemText primary="Закреплённые" />
+                        </ListItem>
+                    </Link>
                     <ListItem button>
                         <ListItemIcon><VisibilityOffIcon /></ListItemIcon>
                         <ListItemText primary="Скрытые" />
