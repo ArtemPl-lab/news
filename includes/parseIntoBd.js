@@ -17,12 +17,10 @@ async function parseIntoBd(resource) {
     let sitemapLinks = await sitemapParser.startParse(); 
     for (let sitemapLinksElement of sitemapLinks) {
         if (!(await News.findOne({ newsUrl : sitemapLinksElement }))) {
-            // console.log(sitemapLinksElement);
             try {
                 let pageContent = await getAndParsePage(pageParser, sitemapLinksElement);
 
                 if(pageContent.title){
-                    // console.log(pageContent);
 
                     let now = String(new Date)
             
@@ -32,6 +30,11 @@ async function parseIntoBd(resource) {
                         newsContent : pageContent.body,
                         newsUrl : sitemapLinksElement,
                         now : now,
+                        tabTitle: pageContent.title,
+                        tabDesc: pageContent.body.slice(0, 100)+"...",
+                        longDesc: pageContent.body.slice(0, 300)+"...",
+                        visible : true,
+                        pinned : false,
                         resource_id : resource.id
                     })
                     await news.save()
@@ -40,9 +43,6 @@ async function parseIntoBd(resource) {
             catch(e) {
                 console.log(e);
             }
-        }
-        else{
-            // console.log("Есть в бд");
         }
     }
 }
