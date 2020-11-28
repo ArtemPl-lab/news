@@ -55,7 +55,7 @@ router.post('/news', async (req, res) => {
         console.log(page);
         const news = await News.find().skip((page-1)*10).limit(10)
 
-        res.status(200).json({...news, page})
+        res.status(200).json(news)
 
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })
