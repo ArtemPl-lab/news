@@ -4,7 +4,8 @@ const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const config = require('config')
 const router = Router()
-const bcrypt = require('bcrypt')
+const bodyParser = require("body-parser")
+
 
 const validate = require("../includes/validate")
 
@@ -12,7 +13,7 @@ module.exports = router;
 
 const app = express()
 
-app.use(express.json());
+app.use(bodyParser.json());
 
 //Обработка авторизации
 
@@ -45,15 +46,16 @@ router.post('/login', async (req, res) => {
                 res.json({ token, userId: user.id })
             }
             else {
-                console.log("Неверный логин или пароль");
+                res.json({ message : "Неверный логин или пароль"});
             }
             
         } 
         else {
-           console.log(errors)
+            res.json(errors)
         }
 
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })
     }
+    res.end()
 })

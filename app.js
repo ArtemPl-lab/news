@@ -23,7 +23,15 @@ const server = http.createServer(function(request, response) {
 
 //Подключаем роуты 
 
-app.use(express.json());
+app.options('*', (req, res) => {
+    res.set({'Accept': 'application/json',
+    "Content-Type": "application/json",
+    'Access-Control-Allow-Origin': '*'});
+
+    res.send('ok');
+  });
+
+app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({
     extended: true

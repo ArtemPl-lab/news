@@ -10,20 +10,21 @@ mongoose.connect(config.get("mongoUri"), {
 
 const Resource = require("./models/Resource")
 
-Resource.find({checkingPeriod : {$ne : 0}}, function(err, res) {
-    if (err) return console.log(err)
-    
-    console.log(res)
+async function startDaemon() {
 
-    try {
+let resource = await Resource.find({checkingPeriod : {$ne : 0}})
 
-        for (resource in res) {
+        for (let i = 0; i < resource.length; i++) {
             setInterval(function() {
-                parseIntoBd(resource)
-            }, 60000 * resource.checkingPeriod)  
+                try {
+                    parseIntoBd(resource[i])
+                }
+                catch(e) {
+                    console.log(e);
+                }
+            }, 60000 * resource[i].checkingPeriod)  
         }
+
     }
-    catch(e) {
-        console.log(e);
-    }
-})
+
+    startDaemon()
