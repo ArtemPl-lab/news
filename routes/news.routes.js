@@ -14,9 +14,9 @@ module.exports = router;
 router.post('/createNews', auth, async (req, res) => {
     try {
         
-        const {newsTitle, newsContent, tabTitle, tabDesc, longDesc} = req.body
+        const {newsTitle, newsContent, tabTitle, tabDesc, longDesc, resource_id} = req.body
 
-        const newsUrl = newsTitle
+        const newsUrl = cyrillicToTranslit().transform(newsTitle.toLowerCase(),"-");
 
         const now = new Date
 
@@ -31,7 +31,7 @@ router.post('/createNews', auth, async (req, res) => {
             longDesc,
             visible : true,
             pinned : false,
-        //    resource_id 
+            resource_id : resource_id
         })
 
         await news.save()
@@ -142,6 +142,40 @@ router.post('/delete', auth, async (req, res) => {
              
             console.log(result);
         });
+
+    } catch (e) {
+        res.status(500).json({ message: 'Что-то пошло не так' })
+    }
+})
+
+
+//Вывод всех закрепленных новостей
+
+//api/news/pinned-news/
+
+router.post('/pinned-news', async (req, res) => {
+    try {
+
+        const news = await News.find({ pinned : true })
+
+        res.status(200).json(news)
+
+    } catch (e) {
+        res.status(500).json({ message: 'Что-то пошло не так' })
+    }
+})
+
+
+//Вывод всех скрытых новостей
+
+//api/news/hidden-news/
+
+router.post('/hidden-news', async (req, res) => {
+    try {
+
+        const news = await News.find({ visible : false })
+
+        res.status(200).json(news)
 
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })

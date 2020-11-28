@@ -5,6 +5,9 @@ class PostsStore {
   constructor() {
     makeAutoObservable(this)
   }
+  getPosts(){
+    return this.posts;
+  }
   async loadPosts(){
     const response = await fetch('/api/news/news',{
         method: 'POST',

@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const express = require('express')
 const app = express();
-const bodyParser = require('body-parser');
 const config = require('config');
 const WebSocketServer = require('websocket').server;
 const http = require('http');
+const startDaemon = require('./sitemapChecking');
 
 global.connections = [];
 global.sendMessage = (message) => {
@@ -23,17 +23,7 @@ const server = http.createServer(function(request, response) {
 
 //Подключаем роуты 
 
-app.options('*', (req, res) => {
-    res.set({'Accept': 'application/json',
-    "Content-Type": "application/json",
-    'Access-Control-Allow-Origin': '*'});
-
-    res.send('ok');
-  });
-
-app.use(bodyParser.json());
-
-app.use(bodyParser.urlencoded({
+app.use(express.json({
     extended: true
 }));
 
@@ -63,6 +53,7 @@ async function start() {
         wsServer.on('request', async request => {
             global.connections.push(request.accept('echo-protocol'));
         });
+        startDaemon();
         
     } catch(e) {
         console.log('Server Error', e.message)

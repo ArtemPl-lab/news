@@ -67,8 +67,8 @@ export default function SignIn() {
     e.preventDefault();
     const response = await fetch('/api/auth/login', {
       method: 'POST',
-      headers:{
-        'Content-Type': 'application/json'
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify({
         login: formValues.name,
@@ -78,7 +78,7 @@ export default function SignIn() {
     const json = await response.json();
     console.log(json);
   }
-  if(user.getToken()) router.push('/');
+  // if(user.getToken()) router.push('/');
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

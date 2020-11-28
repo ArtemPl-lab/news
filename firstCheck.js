@@ -40,6 +40,8 @@ async function firstCheck(sitemapLink, selectors, resourse){
                 tabTitle: news.title,
                 tabDesc: news.content.slice(0, 100)+"...",
                 longDesc: news.content.slice(0, 300)+"...",
+                visible : true,
+                pinned : false
             });
             await page.save();
             succesCounter++;

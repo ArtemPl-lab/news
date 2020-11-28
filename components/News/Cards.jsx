@@ -7,8 +7,9 @@ const Cards = () => {
     return(
     <Container>
         <Grid spacing={3} container>
-          {postsStore.posts.map(post => (
+          {postsStore.getPosts().map(post => (
             <Grid item xs={12} md={3} sm={6} key={post.url}>
+              {console.log(post)}
               <NewsCard post={post}/>
             </Grid>
           ))}

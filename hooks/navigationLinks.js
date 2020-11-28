@@ -64,10 +64,12 @@ const useNav = isAdmin => {
                 </List>
                 <Divider />
                 <List>
-                    <ListItem button>
-                        <ListItemIcon><DescriptionIcon /></ListItemIcon>
-                        <ListItemText primary="Политика конф." />
-                    </ListItem>
+                    <Link href="/politice">
+                        <ListItem button>
+                            <ListItemIcon><DescriptionIcon /></ListItemIcon>
+                            <ListItemText primary="Политика конф." />
+                        </ListItem>
+                    </Link>
                 </List>
             </React.Fragment>
         );  

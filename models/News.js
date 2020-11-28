@@ -4,6 +4,7 @@ const news = new Schema({
     _id: Schema.Types.ObjectId,
     newsTitle : {
         type : String,
+        unique : true,
         required : true
     },
     newsContent : {

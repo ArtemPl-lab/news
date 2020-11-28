@@ -1,19 +1,9 @@
-const express = require("express")
 const {Router} = require('express')
-const User = require('../models/User')
-const jwt = require('jsonwebtoken')
-const config = require('config')
-const router = Router()
-const bodyParser = require("body-parser")
-
-
-const validate = require("../includes/validate")
-
+const router = Router();
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 module.exports = router;
-
-const app = express()
-
-app.use(bodyParser.json());
 
 //Обработка авторизации
 
@@ -21,11 +11,11 @@ app.use(bodyParser.json());
 
 router.post('/login', async (req, res) => {
     try {
-        const {login, password} = req.body
+        const {login, password} = req.body;
 
-        let errors = validate(login, password)
-
-        if (!errors) {
+        // let errors = validate(login, password)
+        // console.log(errors);
+        // if (!errors) {
             const user = await User.findOne({ login })
 
             if (user) {
@@ -49,13 +39,13 @@ router.post('/login', async (req, res) => {
                 res.json({ message : "Неверный логин или пароль"});
             }
             
-        } 
-        else {
-            res.json(errors)
-        }
+        // } 
+        // else {
+        //     res.json(errors)
+        // }
 
     } catch (e) {
-        res.status(500).json({ message: 'Что-то пошло не так' })
+        res.status(500).json({ message: e.message})
     }
     res.end()
 })
