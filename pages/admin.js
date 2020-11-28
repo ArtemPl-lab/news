@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useStore } from 'mobx-store-provider';
+import { useRouter } from 'next/router';
 
 function Copyright() {
   return (
@@ -48,7 +50,35 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-
+  const { user } = useStore();
+  const [formValues, setFormValues] = useState({
+    name: '',
+    password: ''
+  });
+  const router = useRouter();
+  const handleChange = e => {
+    console.log(e.target.name);
+    setFormValues(state => ({
+      ...state,
+      [e.target.name]: e.target.value
+    }));
+  }
+  const onSubmit = async e => {
+    e.preventDefault();
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        login: formValues.name,
+        password: formValues.password
+      })
+    });
+    const json = await response.json();
+    console.log(json);
+  }
+  if(user.getToken()) router.push('/');
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -59,17 +89,19 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Авторизация
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={onSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
+            id="name"
+            label="Имя пользователя"
+            name="name"
             autoComplete="off"
             autoFocus
+            value={formValues.name}
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -77,10 +109,12 @@ export default function SignIn() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Пароль"
             type="password"
             id="password"
             autoComplete="off"
+            value={formValues.password}
+            onChange={handleChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

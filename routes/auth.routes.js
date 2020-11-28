@@ -17,7 +17,7 @@ module.exports = router;
 router.post('/login', async (req, res) => {
     try {
         const {login, password} = req.body
-
+        console.log(req.body);
         const user = await User.findOne({ login })
 
         const isMatch = bcrypt.compare(password, user.password)
