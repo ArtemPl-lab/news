@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const express = require('express')
 const app = express();
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const config = require('config');
 const WebSocketServer = require('websocket').server;
 const http = require('http');
@@ -23,11 +23,13 @@ const server = http.createServer(function(request, response) {
 
 //Подключаем роуты 
 
-app.use(express.json());
-
-app.use(bodyParser.urlencoded({
+app.use(express.json({
     extended: true
 }));
+
+// app.use(bodyParser.urlencoded({
+//     extended: true
+// }));
 
 app.use('/api/news', require('./routes/news.routes.js'))
 app.use('/api/auth', require('./routes/auth.routes.js'))
