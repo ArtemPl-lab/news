@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const News = require("../models/News")
+const cyrillicToTranslit = require('cyrillic-to-translit-js');
 const SitemapParser = require('./SitemapParser');
 const PageParser = require('./HtmlPageParser');
 var needle = require('needle');
@@ -20,6 +21,8 @@ async function parseIntoBd(resource) {
             try {
                 let pageContent = await getAndParsePage(pageParser, sitemapLinksElement);
 
+                const newsUrl = cyrillicToTranslit().transform(news.title.toLowerCase(),"-");
+
                 if(pageContent.title){
 
                     let now = String(new Date)
@@ -28,14 +31,15 @@ async function parseIntoBd(resource) {
                         _id: new mongoose.Types.ObjectId(),
                         newsTitle : pageContent.title,
                         newsContent : pageContent.body,
-                        newsUrl : sitemapLinksElement,
+                        newsUrl : newsUrl,
                         now : now,
                         tabTitle: pageContent.title,
                         tabDesc: pageContent.body.slice(0, 100)+"...",
                         longDesc: pageContent.body.slice(0, 300)+"...",
                         visible : true,
                         pinned : false,
-                        resource_id : resource.id
+                        resource_id : resource.id,
+                        resourceUrl : sitemapLinksElement
                     })
                     await news.save()
                 }

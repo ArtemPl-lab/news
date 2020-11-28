@@ -30,8 +30,11 @@ const news = new Schema({
     },
     pinned : {
         type : Boolean
-    }
-    // resource: [{ type: Types.ObjectId, ref: "Resource" }]
+    },
+    resourceUrl : {
+        type : String
+    },
+    resource: [{ type: Types.ObjectId, ref: "Resource" }]
 })
 
 module.exports = model('News', news)

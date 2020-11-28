@@ -41,7 +41,8 @@ async function firstCheck(sitemapLink, selectors, resourse){
                 tabDesc: news.content.slice(0, 100)+"...",
                 longDesc: news.content.slice(0, 300)+"...",
                 visible : true,
-                pinned : false
+                pinned : false,
+                resourceUrl : sitemap[i]
             });
             await page.save();
             succesCounter++;
