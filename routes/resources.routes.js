@@ -2,22 +2,21 @@ const {Router} = require('express')
 const Resource = require('../models/Resource')
 const router = Router()
 const auth = require('../middleware/auth.middleware')
-const {parseIntoBd} = require('../includes/parseIntoBd')
-
+const firstCheck = require('../firstCheck');
+const mongoose = require('mongoose')
 //Добавление сайта 
 
 //api/resources/addResource
 
 module.exports = router;
 
-router.post('/addResource', auth, async (req, res) => {
+router.post('/addResource', async (req, res) => {
     try {
         
         const {regularTitle, 
             sitemapLink, 
             regularContent, 
-            siteTitle} = req.body
-
+            siteTitle} = req.body;
         const resource = new Resource({
             _id: new mongoose.Types.ObjectId(),
             regularTitle, 
@@ -27,13 +26,16 @@ router.post('/addResource', auth, async (req, res) => {
         })
 
         await resource.save()
+        firstCheck(sitemapLink, {
+            title: regularTitle,
+            content: regularContent
+        });
 
-        // parseIntoBd(sitemapLink)
-
-        res.status(201).json({ socket })
+        res.status(201);
 
 
     } catch (e) {
+        console.log(e);
         res.status(500).json({ message: 'Что-то пошло не так' })
     }
 })

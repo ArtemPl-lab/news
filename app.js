@@ -1,21 +1,32 @@
 const express = require('express')
-const app = express()
+const app = express();
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const config = require('config');
+const WebSocketServer = require('websocket').server;
+const http = require('http');
 
-const mongoose = require('mongoose')
+global.connections = [];
+global.sendMessage = (message) => {
+    connections.map(connection => {
+        connection.sendUTF(JSON.stringify(message));
+    });
+}
 
-const config = require('config')
-
+const server = http.createServer(function(request, response) {
+    console.log((new Date()) + ' Received request for ' + request.url);
+    response.writeHead(404);
+    response.end();
+});
 
 
 //Подключаем роуты 
-
 
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({
     extended: true
-  }));
+}));
 
 app.use('/api/news', require('./routes/news.routes.js'))
 app.use('/api/auth', require('./routes/auth.routes.js'))
@@ -35,6 +46,14 @@ async function start() {
         app.listen(PORT, () => {
             console.log(`App started on PORT ${PORT}`);
         })
+        server.listen(5001);
+        wsServer = new WebSocketServer({
+            httpServer: server,
+            autoAcceptConnections: false
+        });
+        wsServer.on('request', async request => {
+            global.connections.push(request.accept('echo-protocol'));
+        });
         
     } catch(e) {
         console.log('Server Error', e.message)
