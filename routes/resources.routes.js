@@ -59,7 +59,7 @@ router.post('/resources', auth, async (req, res) => {
 
 //api/resources/edit
 
-router.post('/edit', async (req, res) => {
+router.post('/edit', auth, async (req, res) => {
     try {
         
         const {id, regularTitle, sitemapLink, regularContent, siteTitle} = req.body
@@ -78,7 +78,7 @@ router.post('/edit', async (req, res) => {
 
 //api/resources/page
 
-router.post('/page', async (req, res) => {
+router.post('/page', auth, async (req, res) => {
     try {
         
         const {id} = req.body
@@ -96,7 +96,7 @@ router.post('/page', async (req, res) => {
 
 //api/resources/delete
 
-router.post('/delete', async (req, res) => {
+router.post('/delete', auth, async (req, res) => {
     try {
         
         const {id} = req.body
