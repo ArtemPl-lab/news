@@ -10,7 +10,7 @@ function validate(login, password) {
     if (login.length < 3) errors.push("Логин должен быть не менее 3 символов")
 
 
-    if (errors.length > 1) return errors
+    if (errors.length > 0) return errors
     else return false
 }
 
