@@ -1,10 +1,12 @@
 const {Router, json} = require('express')
 const News = require('../models/News')
 const router = Router()
-const {cyrillicToTranslit} = require('cyrillic-to-translit-js')
+const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const auth = require('../middleware/auth.middleware')
+const mongoose = require("mongoose")
 
 module.exports = router;
+
 //Создание новости 
 
 //api/news/createNews
@@ -12,9 +14,9 @@ module.exports = router;
 router.post('/createNews', auth, async (req, res) => {
     try {
         
-        const {newsTitle, newsContent, resource_id, tabTitle, tabDesc, longDesc} = req.body
+        const {newsTitle, newsContent, tabTitle, tabDesc, longDesc} = req.body
 
-        
+        const newsUrl = newsTitle
 
         const now = new Date
 
@@ -27,7 +29,9 @@ router.post('/createNews', auth, async (req, res) => {
             tabTitle,
             tabDesc,
             longDesc,
-            resource_id
+            visible : true,
+            pinned : false,
+        //    resource_id 
         })
 
         await news.save()
@@ -50,6 +54,7 @@ router.post('/news', async (req, res) => {
         const {page} = req.body
         console.log(page);
         const news = await News.find().skip((page-1)*10).limit(10)
+
         res.status(200).json({...news, page})
 
     } catch (e) {
@@ -61,17 +66,25 @@ router.post('/news', async (req, res) => {
 
 //api/news/edit
 
-router.post('/edit', async (req, res) => {
+router.post('/edit', auth, async (req, res) => {
     try {
-        
-        const {newsTitle, newsContent, newsUrl, resource_id, tabTitle, tabDesc, longDesc} = req.body
+        const {newsTitle, newsContent, newsUrl, resource_id, tabTitle, tabDesc, longDesc, visible, pinned} = req.body
         const news = await News.find({_id: id})
+        
+        News.updateOne({_id: id}, {
+            newsTitle: newsTitle, 
+            newsContent: newsContent, 
+            newsUrl: newsUrl,
+            added_at: added_at, 
+            resource_id : resource_id, 
+            tabTitle: tabTitle, 
+            tabDesc: tabDesc, 
+            longDesc : longDesc,
+            visible : visible,
+            pinned : pinned
+        })
+
         res.status(200).json(news)
-
-
-
-        News.updateOne({_id: id}, {newsTitle: newsTitle, newsContent: newsContent, newsUrl: newsUrl,added_at: added_at  })
-
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })
     }
@@ -83,9 +96,9 @@ router.post('/edit', async (req, res) => {
 
 router.post('/page', async (req, res) => {
     try {
-        
         const {id} = req.body
         const news = await News.find({_id: id})
+        
         res.status(200).json(news)
 
     } catch (e) {
@@ -103,7 +116,9 @@ router.post('/search', async (req, res) => {
         
         const {newsTitle} = req.body
 
-        model.findOne({name: new RegExp('^'+newsTitle+'$', "i")}, function(err, doc) {
+        News.find({name: new RegExp('^'+newsTitle+'$', "i")}, function(err, doc) {
+            if (err) return console.log(err);
+
             console.log(json(doc))
           });
 
@@ -117,14 +132,9 @@ router.post('/search', async (req, res) => {
 
 //api/news/delete
 
-router.post('/delete', async (req, res) => {
-    try {
-        
+router.post('/delete', auth, async (req, res) => {
+    try {        
         const {id} = req.body
-
-        model.findOne({name: new RegExp('^'+newsTitle+'$', "i")}, function(err, doc) {
-            console.log(json(doc))
-          });
 
         News.remove({_id:id}, function(err, result){
              

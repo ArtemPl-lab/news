@@ -1,6 +1,5 @@
 var needle = require('needle');
 
-const News = require('../models/News')
 const SitemapParser = require('./SitemapParser');
 const PageParser = require('./HtmlPageParser');
 
@@ -9,7 +8,7 @@ let getAndParsePage = async (pageParserObj, link) => {
     return pageParserObj.startParse(htmlPage);
 }
 
-function sitemapCheck(sitemapLink, regularTitle, regularContent) {
+async function sitemapCheck(sitemapLink, regularTitle, regularContent) {
 
     let sitemapParser = new SitemapParser(sitemapLink, console.log);
 
@@ -21,7 +20,7 @@ function sitemapCheck(sitemapLink, regularTitle, regularContent) {
 
     
 
-    let sitemapLinks = sitemapParser.startParse();  
+    let sitemapLinks = await sitemapParser.startParse();  
     
     return { sitemapLinks, pageParser }
 }
