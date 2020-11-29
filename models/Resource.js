@@ -13,6 +13,9 @@ const resources = new Schema({
     regularContent : {
         type : String,
     },
+    regularImg : {
+        type : String
+    },
     siteTitle : {
         type : String
     },

@@ -13,7 +13,8 @@ async function parseIntoBd(resource) {
     let sitemapParser = new SitemapParser(resource.sitemapLink, console.log);
     let pageParser = new PageParser({
         title: resource.regularTitle,
-        body: resource.regularContent
+        body: resource.regularContent,
+        img: resource.regularImg,
     });
     let sitemapLinks = await sitemapParser.startParse(); 
     for (let sitemapLinksElement of sitemapLinks) {
@@ -25,7 +26,7 @@ async function parseIntoBd(resource) {
 
                 if(pageContent.title){
 
-                    let now = String(new Date)
+                    let now = String(new Date).toDateString().replace(/[^ ]+ /, '')
             
                     let news = new News ({
                         _id: new mongoose.Types.ObjectId(),
@@ -39,6 +40,7 @@ async function parseIntoBd(resource) {
                         visible : true,
                         pinned : false,
                         resource_id : resource.id,
+                        img : pageContent.img,
                         resourceUrl : sitemapLinksElement
                     })
                     await news.save()
