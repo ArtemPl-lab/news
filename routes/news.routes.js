@@ -18,7 +18,7 @@ router.post('/createNews', auth, async (req, res) => {
 
         const newsUrl = cyrillicToTranslit().transform(newsTitle.toLowerCase(),"-");
 
-        const now = new Date
+        const now = String(new Date)
 
         const news = new News({
             _id: new mongoose.Types.ObjectId(),
