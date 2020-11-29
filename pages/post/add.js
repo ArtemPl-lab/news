@@ -8,6 +8,10 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Editor } from '@tinymce/tinymce-react';
 import Button from '@material-ui/core/Button';
+import { useStore } from 'mobx-store-provider';
+import { observer } from 'mobx-react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -43,10 +47,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleTabs() {
+export default observer(function SimpleTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
+  const { user } = useStore();
+  const router = useRouter();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -56,6 +61,9 @@ export default function SimpleTabs() {
       e.target.getContent()
     );
   }
+  useEffect(()=>{
+    if(!user.userToken) router.push('/');
+  }, [user.userToken]);
   return (
     <div className={classes.root}>
         <AppBar position="static">
@@ -101,4 +109,4 @@ export default function SimpleTabs() {
         </TabPanel>
     </div>
   );
-}
+})

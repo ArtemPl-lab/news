@@ -8,8 +8,11 @@ import postsStore from '../stores/posts-store';
 import alertStore from '../stores/alert-store';
 import user from '../stores/user-store';
 import '../styles/globals.css';
+import useCookie from 'react-use-cookie';
 var W3CWebSocket = require('websocket').w3cwebsocket;
 const MyApp = ({ Component, pageProps }) => {
+  const [userToken, setUserToken] = useCookie('token');
+  user.setToken(userToken);
   const appStore = useCreateStore(() => ({
     menu: menuStore,
     postsStore,

@@ -17,7 +17,19 @@ import AlarmAddIcon from '@material-ui/icons/AlarmAdd';
 import DescriptionIcon from '@material-ui/icons/Description';
 import HomeIcon from '@material-ui/icons/Home';
 import Link from 'next/link';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import useCookie from 'react-use-cookie';
+import { useStore } from 'mobx-store-provider';
+import HelpIcon from '@material-ui/icons/Help';
+import ContactsIcon from '@material-ui/icons/Contacts';
 const useNav = isAdmin => {
+    const [userToken, setUserToken] = useCookie('token');
+    const { user } = useStore();
+    const logout = () => {
+        user.setToken('');
+        setUserToken('');
+    }
+    
     if(isAdmin){
         return(
             <React.Fragment>
@@ -73,27 +85,45 @@ const useNav = isAdmin => {
                         </ListItem>
                     </Link>
                 </List>
+                <Divider />
+                <List>
+                    <ListItem button onClick={logout}>
+                        <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+                        <ListItemText primary="Выйти" />
+                    </ListItem>
+                </List>
             </React.Fragment>
         );  
     }
     return(
         <React.Fragment>
-            <List>
+        <List>
+            <Link href="/">
                 <ListItem button>
+                    <ListItemIcon><HomeIcon /></ListItemIcon>
+                    <ListItemText primary="Главная" />
+                </ListItem>
+            </Link>
+            <ListItem button>
                 <ListItemIcon><FavoriteIcon /></ListItemIcon>
                 <ListItemText primary="Понравившееся" />
+            </ListItem>
+            <ListItem button>
+                <ListItemIcon><HelpIcon /></ListItemIcon>
+                <ListItemText primary="Частые вопросы" />
+            </ListItem>
+            <ListItem button>
+                <ListItemIcon><ContactsIcon /></ListItemIcon>
+                <ListItemText primary="Контакты" />
+            </ListItem>
+            <Link href="/politice">
+                <ListItem button>
+                    <ListItemIcon><DescriptionIcon /></ListItemIcon>
+                    <ListItemText primary="Политика конф." />
                 </ListItem>
-            </List>
-            <Divider />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                <ListItem button key={text}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
-                </ListItem>
-                ))}
-            </List>
-        </React.Fragment>
+            </Link>
+        </List>
+    </React.Fragment>
     );
 }
 
