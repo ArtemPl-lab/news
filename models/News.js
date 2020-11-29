@@ -4,8 +4,9 @@ const news = new Schema({
     _id: Schema.Types.ObjectId,
     newsTitle : {
         type : String,
-        unique : true,
-        required : true
+        required : true,
+        dropDups: true,
+        unique : true
     },
     newsContent : {
         type : String
@@ -32,7 +33,9 @@ const news = new Schema({
         type : Boolean
     },
     resourceUrl : {
-        type : String
+        type : String,
+        dropDups: true,
+        unique : true
     },
     resource: [{ type: Types.ObjectId, ref: "Resource" }]
 })
