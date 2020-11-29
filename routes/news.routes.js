@@ -183,3 +183,24 @@ router.post('/hidden-news', async (req, res) => {
         res.status(500).json({ message: 'Что-то пошло не так' })
     }
 })
+
+
+//Удаление всех новостей
+
+//api/news/deleteAll
+
+router.post('/deleteAll', auth, async (req, res) => {
+    try {        
+
+
+        News.remove({}, function(err, result){
+             
+            if(err) return console.log(err);
+             
+            console.log(result);
+        });
+
+    } catch (e) {
+        res.status(500).json({ message: 'Что-то пошло не так' })
+    }
+})
