@@ -11,6 +11,11 @@ const getAndParsePage = async (link, pageParser) => {
     return pageParser.startParse(htmlPage);
 }
 const stepCallback = (logger) => {
+    console.log({
+        title: "Парсинг sitemap",
+        desc: `Текущая страница sitemap: ${logger.currentPage} / Найдено страниц сайта: ${logger.pagesFound}`,
+        type: "warning"
+    });
     global.sendMessage({
         title: "Парсинг sitemap",
         desc: `Текущая страница sitemap: ${logger.currentPage} / Найдено страниц сайта: ${logger.pagesFound}`,
@@ -29,6 +34,7 @@ async function firstCheck(sitemapLink, selectors, resourse){
             desc: `Обход страницы ${i+1} из ${sitemap.length}`,
             type: "warning"
         });
+        console.log(news);
         if(news.title){
             const newsUrl = cyrillicToTranslit().transform(news.title.toLowerCase(),"-");
             const page = new News({

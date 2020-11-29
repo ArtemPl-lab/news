@@ -2,8 +2,12 @@ import { Container, Grid } from "@material-ui/core";
 import NewsCard from "./NewsCard";
 import { observer } from 'mobx-react';
 import { useStore } from "mobx-store-provider";
+import { useInView } from 'react-intersection-observer';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const Cards = () => {
     const { postsStore } = useStore();
+    const { ref, inView} = useInView({ threshold: 0 });
+    if(inView) postsStore.loadPosts();
     return(
     <Container>
         <Grid spacing={3} container>
@@ -14,7 +18,8 @@ const Cards = () => {
             </Grid>
           ))}
         </Grid>
-        <button onClick={()=>postsStore.loadPosts()}>Загрузить Посты</button>
+        <div ref={ref} />
+        <CircularProgress />
     </Container>
     );
 }

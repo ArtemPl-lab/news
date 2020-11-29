@@ -21,7 +21,7 @@ async function parseIntoBd(resource) {
             try {
                 let pageContent = await getAndParsePage(pageParser, sitemapLinksElement);
 
-                const newsUrl = cyrillicToTranslit().transform(news.title.toLowerCase(),"-");
+                const newsUrl = cyrillicToTranslit().transform(pageContent.title.toLowerCase(),"-");
 
                 if(pageContent.title){
 

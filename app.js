@@ -53,7 +53,7 @@ async function start() {
         wsServer.on('request', async request => {
             global.connections.push(request.accept('echo-protocol'));
         });
-        startDaemon();
+        // startDaemon();
         
     } catch(e) {
         console.log('Server Error', e.message)
