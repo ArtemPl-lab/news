@@ -53,7 +53,7 @@ router.post('/news', async (req, res) => {
     try {
         
         const {page} = req.body
-        console.log(page);
+        console.log(req.body);
         const news = await News.find().skip((page-1)*10).limit(10)
 
         res.status(200).json(news)

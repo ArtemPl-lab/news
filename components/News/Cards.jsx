@@ -13,13 +13,13 @@ const Cards = () => {
         <Grid spacing={3} container>
           {postsStore.posts.map(post => (
             <Grid item xs={12} md={3} sm={6} key={post.url}>
-              {console.log(post)}
               <NewsCard post={post}/>
             </Grid>
           ))}
         </Grid>
-        <div ref={ref} />
-        <CircularProgress />
+        <div ref={ref} style={{display: "flex", justifyContent: "center", paddingTop:"15px"}}>
+          { postsStore.load ? <CircularProgress /> : "" }
+        </div>
     </Container>
     );
 }
