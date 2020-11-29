@@ -5,6 +5,7 @@ const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const auth = require('../middleware/auth.middleware')
 const mongoose = require("mongoose")
 
+
 module.exports = router;
 
 //Создание новости 
@@ -18,7 +19,7 @@ router.post('/createNews', auth, async (req, res) => {
 
         const newsUrl = cyrillicToTranslit().transform(newsTitle.toLowerCase(),"-");
 
-        const now = new Date
+        const now = String(new Date).toDateString().replace(/[^ ]+ /, '')
 
         const news = new News({
             _id: new mongoose.Types.ObjectId(),

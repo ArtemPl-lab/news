@@ -18,21 +18,24 @@ router.post('/addResource', async (req, res) => {
             sitemapLink, 
             regularContent, 
             siteTitle,
-            checkingPeriod} = req.body;
+            checkingPeriod,
+            regularImg} = req.body;
         const resource = new Resource({
             _id: new mongoose.Types.ObjectId(),
             regularTitle, 
             sitemapLink, 
             regularContent, 
             siteTitle,
-            checkingPeriod
+            checkingPeriod,
+            regularImg
         })
 
         await resource.save()
 
         firstCheck(sitemapLink, {
             title: regularTitle,
-            content: regularContent
+            content: regularContent,
+            img: regularImg, 
         });
 
         res.status(201);
@@ -73,14 +76,18 @@ router.post('/edit', auth, async (req, res) => {
             sitemapLink, 
             regularContent, 
             siteTitle,
-            checkingPeriod} = req.body
+            checkingPeriod,
+            regularImg} = req.body
+            
 
         Resource.updateOne({_id: id}, {
             regularTitle : regularTitle, 
             sitemapLink : sitemapLink, 
             regularContent : regularContent, 
             siteTitle : siteTitle,
-            checkingPeriod : checkingPeriod})
+            checkingPeriod : checkingPeriod,
+            regularImg : regularImg
+        })
 
         res.status(200).json({ message: "Ресурс обновлён" })
     } catch (e) {
