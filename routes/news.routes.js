@@ -54,9 +54,9 @@ router.post('/news', async (req, res) => {
         
         const {page} = req.body
         console.log(page);
-        const news = await News.find().skip((page-1)*10).limit(10)
+        const news = await News.find({visible: true}).skip((page-1)*10).limit(10).sort({pinned : -1})
 
-        res.status(200).json(news)
+        res.status(200).json(...news)
 
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })
@@ -118,7 +118,7 @@ router.post('/search', async (req, res) => {
         
         const {newsTitle} = req.body
 
-        News.find({name: new RegExp('^'+newsTitle+'$', "i")}, function(err, doc) {
+        News.find({$and : [{newsTitle: new RegExp('^'+newsTitle+'$', "i")}, {visible: true}]}, function(err, doc) {
             if (err) return console.log(err);
 
             console.log(json(doc))
@@ -158,7 +158,7 @@ router.post('/delete', auth, async (req, res) => {
 router.post('/pinned-news', async (req, res) => {
     try {
 
-        const news = await News.find({ pinned : true })
+        const news = await News.find({$and : [{pinned: true}, {visible: true}]})
 
         res.status(200).json(news)
 
