@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { observer } from "mobx-react";
 import { useStore } from "mobx-store-provider";
 import Link from 'next/link';
-
+import Head from 'next/head'
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
@@ -62,6 +62,10 @@ const Header = () => {
   const { menu } = useStore();
   return (
     <div>
+      <Head>
+        <title>Новости о бизнесе и о франшизах</title>
+        <meta name="description" content="Новости. Главные новости в сфере бизнеса и франчайзинга. Актуальные новости о франшизах" />
+      </Head>
       <AppBar position="static">
         <Toolbar>
         <IconButton

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -6,7 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -14,7 +13,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useStore } from 'mobx-store-provider';
 import { useRouter } from 'next/router';
-
+import { observer } from 'mobx-react';
+import useCookie from 'react-use-cookie';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -48,13 +48,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default observer(function SignIn() {
   const classes = useStyles();
   const { user } = useStore();
   const [formValues, setFormValues] = useState({
     name: '',
     password: ''
   });
+  const [userToken, setUserToken] = useCookie('token');
   const router = useRouter();
   const handleChange = e => {
     console.log(e.target.name);
@@ -76,9 +77,12 @@ export default function SignIn() {
       })
     });
     const json = await response.json();
-    console.log(json);
+    if(json.token){
+      setUserToken(json.token);
+      user.setToken(json.token);
+    }
   }
-  // if(user.getToken()) router.push('/');
+  if(user.userToken) router.push('/');
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -136,4 +140,4 @@ export default function SignIn() {
       </Box>
     </Container>
   );
-}
+})

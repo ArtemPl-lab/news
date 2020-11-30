@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundImage: 'url(https://ua.news/wp-content/uploads/2020/07/labusinessportal.jpg)',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -46,7 +46,7 @@ export default function Jumbtorn() {
         <Grid item md={6}>
           <div className={classes.mainFeaturedPostContent}>
             <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae, voluptatem.
+              Главные новости в сфере бизнеса и франчайзинга
             </Typography>
             <Typography variant="h5" color="inherit" paragraph>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime tenetur mollitia, nobis numquam veniam temporibus dolor alias. Est reprehenderit voluptatum ex animi cupiditate possimus asperiores autem odio, voluptas inventore. Officia!

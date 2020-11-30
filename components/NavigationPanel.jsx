@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme)=>({
 
 const NavigationPanel = ({}) => {
   const classes = useStyles();
-  const { menu } = useStore();
-  const nav = useNav(true);
+  const { menu, user } = useStore();
+  const nav = useNav(Boolean(user.userToken));
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
