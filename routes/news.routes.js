@@ -19,7 +19,8 @@ router.post('/createNews', auth, async (req, res) => {
 
         const newsUrl = cyrillicToTranslit().transform(newsTitle.toLowerCase(),"-");
 
-        const now = String(new Date).toDateString().replace(/[^ ]+ /, '')
+        let now = new Date
+        now = now.toDateString().replace(/[^ ]+ /, '')
 
         const news = new News({
             _id: new mongoose.Types.ObjectId(),
@@ -36,7 +37,9 @@ router.post('/createNews', auth, async (req, res) => {
             resourceUrl
         })
 
-        await news.save()
+        news.save((err) => {
+            if (err) console.log("Уже есть в бд");
+        })
 
         res.status(201).json({ news })
 
@@ -70,26 +73,31 @@ router.post('/news', async (req, res) => {
 
 router.post('/edit', auth, async (req, res) => {
     try {
-        const {newsTitle, newsContent, newsUrl, resource_id, tabTitle, tabDesc, longDesc, resourceUrl, visible, pinned} = req.body
+        const {id,newsTitle, newsContent, newsUrl, resource_id, tabTitle, tabDesc, longDesc, resourceUrl, visible, pinned, added_at} = req.body
         const news = await News.find({_id: id})
         
-        News.updateOne({_id: id}, {
-            newsTitle: newsTitle, 
-            newsContent: newsContent, 
-            newsUrl: newsUrl,
-            added_at: added_at, 
-            resource_id : resource_id, 
-            tabTitle: tabTitle, 
-            tabDesc: tabDesc, 
-            longDesc : longDesc,
-            visible : visible,
-            resourceUrl : resourceUrl,
-            pinned : pinned
+        News.findOneAndUpdate({_id : id}, {
+            newsTitle: newsTitle || news.newsTitle, 
+            newsContent: newsContent || news.newsContent, 
+            newsUrl: newsUrl || news.newsUrl,
+            added_at: added_at || news.added_at, 
+            resource_id : resource_id || news.resource_id, 
+            tabTitle: tabTitle || news.tabTitle,  
+            tabDesc: tabDesc || news.tabDesc, 
+            longDesc : longDesc || news.longDesc,
+            visible : visible || news.visible,
+            resourceUrl : resourceUrl || news.resourceUrl,
+            pinned : pinned || news.pinned
+        }, (err, result) => {
+            if (err) return console.log(err);
+            console.log(result);
         })
 
-        res.status(200).json(news)
+        console.log(news);
+
+        res.status(200).json({ message: "Новость обновлена" })
     } catch (e) {
-        res.status(500).json({ message: 'Что-то пошло не так' })
+        console.log(e)
     }
 })
 
@@ -119,12 +127,13 @@ router.post('/search', async (req, res) => {
         
         const {newsTitle} = req.body
 
-        News.find({$and : [{newsTitle: new RegExp('^'+newsTitle+'$', "i")}, {visible: true}]}, function(err, doc) {
+        News.find({$and : [{newsTitle: new RegExp(newsTitle, "i")}, {visible: true}]}, (err, doc) => {
             if (err) return console.log(err);
 
-            console.log(json(doc))
+            console.log(doc)
           });
 
+          res.status(200).json({ message: 'Новость найдена' })
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })
     }
@@ -139,13 +148,14 @@ router.post('/delete', auth, async (req, res) => {
     try {        
         const {id} = req.body
 
-        News.remove({_id:id}, function(err, result){
+        News.findByIdAndDelete({_id:id}, function(err, result){
              
             if(err) return console.log(err);
              
             console.log(result);
         });
 
+        res.status(500).json({ message: 'Новость удалена' })
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })
     }

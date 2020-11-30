@@ -22,11 +22,13 @@ async function parseIntoBd(resource) {
             try {
                 let pageContent = await getAndParsePage(pageParser, sitemapLinksElement);
 
-                const newsUrl = cyrillicToTranslit().transform(pageContent.title.toLowerCase(),"-");
+                let newsUrl = newsUrl.replace(/[^a-zA-Z0-9]/g, '');
+                newsUrl = cyrillicToTranslit().transform(news.title.toLowerCase(),"-");
 
                 if(pageContent.title){
 
-                    let now = String(new Date).toDateString().replace(/[^ ]+ /, '')
+                    let now = new Date
+                    now = now.toDateString().replace(/[^ ]+ /, '')
             
                     let news = new News ({
                         _id: new mongoose.Types.ObjectId(),
@@ -43,7 +45,9 @@ async function parseIntoBd(resource) {
                         img : pageContent.img,
                         resourceUrl : sitemapLinksElement
                     })
-                    await news.save()
+                    news.save((err) => {
+                        if (err) console.log("Уже есть бд");
+                    });
                 }
             }
             catch(e) {

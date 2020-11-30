@@ -36,13 +36,18 @@ async function firstCheck(sitemapLink, selectors, resourse){
         });
         console.log(news);
         if(news.title){
-            const newsUrl = cyrillicToTranslit().transform(news.title.toLowerCase(),"-");
+            let newsUrl = news.title.replace(/[^a-zA-Z0-9]/g, '');
+            newsUrl = cyrillicToTranslit().transform(news.title.toLowerCase(),"-");
+
+            let now = new Date
+            now = now.toDateString().replace(/[^ ]+ /, '')
+
             const page = new News({
                 _id: new mongoose.Types.ObjectId(),
                 newsTitle: news.title,
                 newsContent: news.content,
                 newsUrl,
-                added_at: String(new Date),
+                added_at: now,
                 tabTitle: news.title,
                 tabDesc: news.content.slice(0, 100)+"...",
                 longDesc: news.content.slice(0, 300)+"...",
@@ -51,7 +56,11 @@ async function firstCheck(sitemapLink, selectors, resourse){
                 img : news.img,
                 resourceUrl : sitemap[i]
             });
-            await page.save();
+            console.log(newsUrl);
+            console.log(now);
+            page.save((err) => {
+                if (err) console.log("Уже есть бд");
+            });
             succesCounter++;
         }
     }
