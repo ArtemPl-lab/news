@@ -13,9 +13,9 @@ router.post('/login', async (req, res) => {
     try {
         const {login, password} = req.body;
 
-        // let errors = validate(login, password)
-        // console.log(errors);
-        // if (!errors) {
+        let errors = validate(login, password)
+        console.log(errors);
+        if (!errors) {
             const user = await User.findOne({ login })
 
             if (user) {
@@ -38,6 +38,9 @@ router.post('/login', async (req, res) => {
             else {
                 res.json({ message : "Неверный логин или пароль"});
             }
+        } else {
+            console.log(errors)
+        }
             
 
     } catch (e) {
