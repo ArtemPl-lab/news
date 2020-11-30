@@ -78,13 +78,11 @@ export default observer(function SignIn() {
     });
     const json = await response.json();
     if(json.token){
-      user.setToken(json.token);
       setUserToken(json.token);
+      user.setToken(json.token);
     }
   }
-  useEffect(() => {
-    if(user.userToken) router.push('/');
-  }, [user.userToken])
+  if(user.userToken) router.push('/');
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

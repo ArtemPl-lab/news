@@ -67,10 +67,12 @@ const useNav = isAdmin => {
                         <ListItemIcon><SystemUpdateAltIcon /></ListItemIcon>
                         <ListItemText primary="Источники" />
                     </ListItem>
-                    <ListItem button>
-                        <ListItemIcon><PlaylistAddIcon /></ListItemIcon>
-                        <ListItemText primary="Добавить источник" />
-                    </ListItem>
+                    <Link href="/resourses/add">
+                        <ListItem button>
+                            <ListItemIcon><PlaylistAddIcon /></ListItemIcon>
+                            <ListItemText primary="Добавить источник" />
+                        </ListItem>
+                    </Link>
                     <ListItem button>
                         <ListItemIcon><AlarmAddIcon /></ListItemIcon>
                         <ListItemText primary="История парсинга" />
@@ -108,10 +110,12 @@ const useNav = isAdmin => {
                 <ListItemIcon><FavoriteIcon /></ListItemIcon>
                 <ListItemText primary="Понравившееся" />
             </ListItem>
-            <ListItem button>
-                <ListItemIcon><HelpIcon /></ListItemIcon>
-                <ListItemText primary="Частые вопросы" />
-            </ListItem>
+            <Link href="/questions">
+                <ListItem button>
+                    <ListItemIcon><HelpIcon /></ListItemIcon>
+                    <ListItemText primary="Частые вопросы" />
+                </ListItem>
+            </Link>
             <ListItem button>
                 <ListItemIcon><ContactsIcon /></ListItemIcon>
                 <ListItemText primary="Контакты" />

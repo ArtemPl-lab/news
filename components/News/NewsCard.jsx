@@ -17,6 +17,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { CardActionArea } from '@material-ui/core';
 import Link from 'next/link';
 import { useStore } from "mobx-store-provider";
+import { observer } from 'mobx-react';
 const useStyles = makeStyles((theme) => ({
   expand: {
     transform: 'rotate(0deg)',
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NewsCard = ({post}) => {
-  const { postsStore } = useStore();
+  const { postsStore, user } = useStore();
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -43,9 +44,10 @@ const NewsCard = ({post}) => {
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon /> 
-          </IconButton>
+          user.userToken ? 
+        <IconButton aria-label="settings">
+          <MoreVertIcon /> 
+        </IconButton> : ()=>{}
         }
         title={post.newsTitle.slice(0, 30)}
         subheader={post.added_at}
@@ -91,4 +93,4 @@ const NewsCard = ({post}) => {
   );
 }
 
-export default NewsCard;
+export default observer(NewsCard);

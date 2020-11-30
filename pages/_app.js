@@ -19,7 +19,7 @@ const MyApp = ({ Component, pageProps }) => {
     alert: alertStore,
     user: user
   }));
-  // if(user.getToken()){
+  if(user.userToken){
     let client = new W3CWebSocket('ws://localhost:5001/', 'echo-protocol');
     client.onerror = function() {};
     client.onmessage = function(e) {
@@ -27,7 +27,7 @@ const MyApp = ({ Component, pageProps }) => {
           alertStore.showAlert(JSON.parse(e.data));
         }
     };
-  // }
+  }
   const Provider = useProvider();
   return (
     <Provider value={appStore}>
