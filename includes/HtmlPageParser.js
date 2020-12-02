@@ -10,7 +10,7 @@ class PageParser{
         for(let key in this.elements){
             results = {
                 ...results,
-                [key]: $(this.elements[key]).text().trim()
+                [key]: (this.elements[key].includes('img') ? $(this.elements[key]).first().attr('src') : $(this.elements[key]).text().trim())
             }
         }
         return results;
