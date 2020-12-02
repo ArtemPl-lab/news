@@ -45,7 +45,7 @@ async function start() {
     try {
         await mongoose.connect(config.get("mongoUri"))
         app.listen(PORT, () => {
-            console.log(`App started on PORT ${PORT}`);
+            // console.log(`App started on PORT ${PORT}`);
         })
         server.listen(5001);
         wsServer = new WebSocketServer({
