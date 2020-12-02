@@ -23,13 +23,15 @@ async function parseIntoBd(resource) {
                 let pageContent = await getAndParsePage(pageParser, sitemapLinksElement);
 
                 let newsUrl = newsUrl.replace(/[^a-zA-Z0-9]/g, '');
-                newsUrl = cyrillicToTranslit().transform(news.title.toLowerCase(),"-");
+                newsUrl = cyrillicToTranslit().transform(pageContent.title.toLowerCase(),"-");
+                newsUrl = newsUrl.replace(/[&\/\\#, +()$~.'":*<>{}]/g, '');
 
                 if(pageContent.title){
 
                     let now = new Date
                     now = now.toDateString().replace(/[^ ]+ /, '')
-            
+                    
+
                     let news = new News ({
                         _id: new mongoose.Types.ObjectId(),
                         newsTitle : pageContent.title,

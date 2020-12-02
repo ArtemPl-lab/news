@@ -39,7 +39,8 @@ async function firstCheck(sitemapLink, selectors, resourse){
             if(news.title){
                 let newsUrl = news.title.replace(/[^a-zA-Z0-9]/g, '');
                 newsUrl = cyrillicToTranslit().transform(news.title.toLowerCase(),"-");
-    
+                newsUrl = newsUrl.replace(/[&\/\\#, +()$~.'":*<>{}]/g, '');
+
                 let now = new Date
                 now = now.toDateString().replace(/[^ ]+ /, '')
     

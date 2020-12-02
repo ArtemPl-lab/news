@@ -17,7 +17,8 @@ router.post('/createNews', auth, async (req, res) => {
         
         const {newsTitle, newsContent, tabTitle, tabDesc, longDesc, resource_id, resourceUrl} = req.body
 
-        const newsUrl = cyrillicToTranslit().transform(newsTitle.toLowerCase(),"-");
+        let newsUrl = cyrillicToTranslit().transform(newsTitle.toLowerCase(),"-");
+        newsUrl = newsUrl.replace(/[&\/\\#, +()$~.'":*<>{}]/g, '');
 
         let now = new Date
         now = now.toDateString().replace(/[^ ]+ /, '')
