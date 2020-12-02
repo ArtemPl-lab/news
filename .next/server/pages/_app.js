@@ -932,7 +932,7 @@ const MyApp = ({
   }));
 
   if (user_store.userToken) {
-    let client = new W3CWebSocket('ws://localhost:5001/', 'echo-protocol');
+    let client = new W3CWebSocket('ws://newsbizness.ru:5001/', 'echo-protocol');
 
     client.onerror = function () {};
 
