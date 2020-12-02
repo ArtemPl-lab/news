@@ -87,7 +87,7 @@ const NewsCard = ({post}) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{post.newsContent.slice(50, 500)}</Typography>
+          <Typography paragraph>{post.newsContent.slice(0, 500)}</Typography>
         </CardContent>
       </Collapse>
     </Card>
