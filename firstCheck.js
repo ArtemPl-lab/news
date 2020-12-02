@@ -27,43 +27,49 @@ async function firstCheck(sitemapLink, selectors, resourse){
     const pageParser = new PageParser(selectors);
     const sitemap = await sitemapParser.startParse();
     let succesCounter = 0;
-    for(let i = 0; i < sitemap.length; i++){
-        const news = await getAndParsePage(sitemap[i], pageParser);
-        global.sendMessage({
-            title: "Получение контента страниц",
-            desc: `Обход страницы ${i+1} из ${sitemap.length}`,
-            type: "warning"
-        });
-        console.log(news);
-        if(news.title){
-            let newsUrl = news.title.replace(/[^a-zA-Z0-9]/g, '');
-            newsUrl = cyrillicToTranslit().transform(news.title.toLowerCase(),"-");
-
-            let now = new Date
-            now = now.toDateString().replace(/[^ ]+ /, '')
-
-            const page = new News({
-                _id: new mongoose.Types.ObjectId(),
-                newsTitle: news.title,
-                newsContent: news.content,
-                newsUrl,
-                added_at: now,
-                tabTitle: news.title,
-                tabDesc: news.content.slice(0, 100)+"...",
-                longDesc: news.content.slice(0, 300)+"...",
-                visible : true,
-                pinned : false,
-                img : news.img,
-                resourceUrl : sitemap[i]
+    try {
+        for(let i = 0; i < sitemap.length; i++){
+            const news = await getAndParsePage(sitemap[i], pageParser);
+            global.sendMessage({
+                title: "Получение контента страниц",
+                desc: `Обход страницы ${i+1} из ${sitemap.length}`,
+                type: "warning"
             });
-            console.log(newsUrl);
-            console.log(now);
-            page.save((err) => {
-                if (err) console.log("Уже есть бд");
-            });
-            succesCounter++;
+            console.log(news);
+            if(news.title){
+                let newsUrl = news.title.replace(/[^a-zA-Z0-9]/g, '');
+                newsUrl = cyrillicToTranslit().transform(news.title.toLowerCase(),"-");
+    
+                let now = new Date
+                now = now.toDateString().replace(/[^ ]+ /, '')
+    
+                const page = new News({
+                    _id: new mongoose.Types.ObjectId(),
+                    newsTitle: news.title,
+                    newsContent: news.content,
+                    newsUrl,
+                    added_at: now,
+                    tabTitle: news.title,
+                    tabDesc: news.content.slice(0, 100)+"...",
+                    longDesc: news.content.slice(0, 300)+"...",
+                    visible : true,
+                    pinned : false,
+                    img : news.img,
+                    resourceUrl : sitemap[i]
+                });
+                console.log(newsUrl);
+                console.log(now);
+                page.save((err) => {
+                    if (err) console.log("Уже есть бд");
+                });
+                succesCounter++;
+            }
         }
+    } catch(e) {
+        console.log(e);
     }
+    
+    
     global.sendMessage({
         title: "Обход успешно завершён",
         desc: `Получено страниц ${succesCounter} из ${sitemap.length}`,

@@ -11,7 +11,7 @@ module.exports = router;
 
 //api/resources/addResource
 
-router.post('/addResource', auth, async (req, res) => {
+router.post('/addResource', async (req, res) => {
     try {
         
         const {regularTitle, 
