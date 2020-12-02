@@ -79,19 +79,23 @@ router.post('/edit', auth, async (req, res) => {
             checkingPeriod,
             regularImg} = req.body
             
+        const resource = await Resource.find({_id: id})
 
-        Resource.updateOne({_id: id}, {
-            regularTitle : regularTitle, 
-            sitemapLink : sitemapLink, 
-            regularContent : regularContent, 
-            siteTitle : siteTitle,
-            checkingPeriod : checkingPeriod,
-            regularImg : regularImg
+        Resource.findOneAndUpdate({_id : id}, {
+            regularTitle : regularTitle || resource.regularTitle, 
+            sitemapLink : sitemapLink || resource.sitemapLink, 
+            regularContent : regularContent || resource.regularContent, 
+            siteTitle : siteTitle || resource.siteTitle,
+            checkingPeriod : checkingPeriod || resource.checkingPeriod,
+            regularImg : regularImg || resource.regularImg
+        }, (err, result) => {
+            if (err) return console.log(err);
+            console.log(result);
         })
 
         res.status(200).json({ message: "Ресурс обновлён" })
     } catch (e) {
-        res.status(500).json({ message: 'Что-то пошло не так' })
+        console.log(e);
     }
 })
 
@@ -129,7 +133,7 @@ router.post('/delete', auth, async (req, res) => {
              
             console.log(result);
         });
-
+        res.status(200).json({ message: 'Ресурс удалён' })
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })
     }

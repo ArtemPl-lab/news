@@ -28,20 +28,22 @@ app.use(express.json({
 }));
 
 app.use('/api/news', require('./routes/news.routes.js'))
+app.use("/api/news'", require("./routes/news.routes.js"))
 app.use('/api/auth', require('./routes/auth.routes.js'))
 app.use('/api/resources', require('./routes/resources.routes.js'))
+app.use("/api/resources'", require("./routes/resources.routes.js"))
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
 
 const PORT = 5000
 
 
 async function start() {
     try {
-        await mongoose.connect(config.get("mongoUri"), {
-            useNewUrlParser: true, 
-            useUnifiedTopology: true,
-            useCreateIndex: true
-        })
+        await mongoose.connect(config.get("mongoUri"))
         app.listen(PORT, () => {
             console.log(`App started on PORT ${PORT}`);
         })
