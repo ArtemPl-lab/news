@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "back_start": "nodemon app.js"
+    "back_start": "node app.js"
   },
   "proxy": "http://localhost:5000",
   "dependencies": {
