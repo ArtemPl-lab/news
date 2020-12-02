@@ -42,7 +42,7 @@ router.post('/addResource', async (req, res) => {
 
 
     } catch (e) {
-        console.log(e);
+        // console.log(e);
         res.status(500).json({ message: 'Что-то пошло не так' })
     }
 })
@@ -90,12 +90,12 @@ router.post('/edit', auth, async (req, res) => {
             regularImg : regularImg || resource.regularImg
         }, (err, result) => {
             if (err) return console.log(err);
-            console.log(result);
+            // console.log(result);
         })
 
         res.status(200).json({ message: "Ресурс обновлён" })
     } catch (e) {
-        console.log(e);
+        // console.log(e);
     }
 })
 
@@ -131,7 +131,7 @@ router.post('/delete', auth, async (req, res) => {
              
             if(err) return console.log(err);
              
-            console.log(result);
+            // console.log(result);
         });
         res.status(200).json({ message: 'Ресурс удалён' })
     } catch (e) {

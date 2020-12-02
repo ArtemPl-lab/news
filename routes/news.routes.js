@@ -39,7 +39,7 @@ router.post('/createNews', auth, async (req, res) => {
         })
 
         news.save((err) => {
-            if (err) console.log("Уже есть в бд");
+            // if (err) console.log("Уже есть в бд");
         })
 
         res.status(201).json({ news })
@@ -58,7 +58,6 @@ router.post('/news', async (req, res) => {
     try {
         
         const {page} = req.body
-        console.log(page);
         const news = await News.find({visible: true}).skip((page-1)*10).limit(10).sort({pinned : -1})
 
         res.status(200).json(news)
@@ -75,7 +74,6 @@ router.post('/likedNews', async (req, res) => {
         for(id of newsIdArray){
             news.push(await News.findOne({_id: id}));
         }
-        console.log(news);
         res.status(200).json(news)
 
     } catch (e) {
@@ -105,14 +103,14 @@ router.post('/edit', auth, async (req, res) => {
             pinned : pinned || news.pinned
         }, (err, result) => {
             if (err) return console.log(err);
-            console.log(result);
+            // console.log(result);
         })
 
-        console.log(news);
+        // console.log(news);
 
         res.status(200).json({ message: "Новость обновлена" })
     } catch (e) {
-        console.log(e)
+        // console.log(e)
     }
 })
 
@@ -145,7 +143,7 @@ router.post('/search', async (req, res) => {
         News.find({$and : [{newsTitle: new RegExp(newsTitle, "i")}, {visible: true}]}, (err, doc) => {
             if (err) return console.log(err);
 
-            console.log(doc)
+            // console.log(doc)
           });
 
           res.status(200).json({ message: 'Новость найдена' })
@@ -167,7 +165,7 @@ router.post('/delete', auth, async (req, res) => {
              
             if(err) return console.log(err);
              
-            console.log(result);
+            // console.log(result);
         });
 
         res.status(500).json({ message: 'Новость удалена' })
@@ -223,7 +221,7 @@ router.post('/deleteAll', auth, async (req, res) => {
              
             if(err) return console.log(err);
              
-            console.log(result);
+            // console.log(result);
         });
 
     } catch (e) {
