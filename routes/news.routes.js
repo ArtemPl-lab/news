@@ -67,7 +67,21 @@ router.post('/news', async (req, res) => {
         res.status(500).json({ message: 'Что-то пошло не так' })
     }
 })
+router.post('/likedNews', async (req, res) => {
+    try {
+        
+        const { newsIdArray } = req.body;
+        let news = [];
+        for(id of newsIdArray){
+            news.push(await News.findOne({_id: id}));
+        }
+        console.log(news);
+        res.status(200).json(news)
 
+    } catch (e) {
+        res.status(500).json({ message: 'Что-то пошло не так' })
+    }
+})
 //Редактирование новостей
 
 //api/news/edit

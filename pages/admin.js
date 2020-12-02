@@ -15,7 +15,6 @@ import { useStore } from 'mobx-store-provider';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react';
 import useCookie from 'react-use-cookie';
-import AdminForm from '../components/adminForm';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -85,61 +84,60 @@ export default observer(function SignIn() {
   }
   if(user.userToken) router.push('/');
   return (
-    <AdminForm />
-    // <Container component="main" maxWidth="xs">
-    //   <CssBaseline />
-    //   <div className={classes.paper}>
-    //     <Avatar className={classes.avatar}>
-    //       <LockOutlinedIcon />
-    //     </Avatar>
-    //     <Typography component="h1" variant="h5">
-    //       Авторизация
-    //     </Typography>
-    //     <form className={classes.form} noValidate onSubmit={onSubmit}>
-    //       <TextField
-    //         variant="outlined"
-    //         margin="normal"
-    //         required
-    //         fullWidth
-    //         id="name"
-    //         label="Имя пользователя"
-    //         name="name"
-    //         autoComplete="off"
-    //         autoFocus
-    //         value={formValues.name}
-    //         onChange={handleChange}
-    //       />
-    //       <TextField
-    //         variant="outlined"
-    //         margin="normal"
-    //         required
-    //         fullWidth
-    //         name="password"
-    //         label="Пароль"
-    //         type="password"
-    //         id="password"
-    //         autoComplete="off"
-    //         value={formValues.password}
-    //         onChange={handleChange}
-    //       />
-    //       <FormControlLabel
-    //         control={<Checkbox value="remember" color="primary" />}
-    //         label="Запомнить меня"
-    //       />
-    //       <Button
-    //         type="submit"
-    //         fullWidth
-    //         variant="contained"
-    //         color="primary"
-    //         className={classes.submit}
-    //       >
-    //         Войти
-    //       </Button>
-    //     </form>
-    //   </div>
-    //   <Box mt={8}>
-    //     <Copyright />
-    //   </Box>
-    // </Container>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Авторизация
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={onSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Имя пользователя"
+            name="name"
+            autoComplete="off"
+            autoFocus
+            value={formValues.name}
+            onChange={handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Пароль"
+            type="password"
+            id="password"
+            autoComplete="off"
+            value={formValues.password}
+            onChange={handleChange}
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Запомнить меня"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Войти
+          </Button>
+        </form>
+      </div>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </Container>
   );
 })

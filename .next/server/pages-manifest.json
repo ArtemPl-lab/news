@@ -1,0 +1,19 @@
+{
+  "/_app": "pages/_app.js",
+  "/about": "pages/about.html",
+  "/admin": "pages/admin.html",
+  "/anchored": "pages/anchored.html",
+  "/api/[...args]": "pages/api/[...args].js",
+  "/": "pages/index.html",
+  "/liked": "pages/liked.html",
+  "/politice": "pages/politice.html",
+  "/postPage/[url]": "pages/postPage/[url].html",
+  "/post/add": "pages/post/add.html",
+  "/post/edit/[url]": "pages/post/edit/[url].html",
+  "/questions": "pages/questions.html",
+  "/resourses/add": "pages/resourses/add.html",
+  "/search/[query]": "pages/search/[query].html",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
+}

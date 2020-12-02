@@ -56,10 +56,12 @@ const useNav = isAdmin => {
                         <ListItemIcon><VisibilityOffIcon /></ListItemIcon>
                         <ListItemText primary="Скрытые" />
                     </ListItem>
-                    <ListItem button>
-                        <ListItemIcon><FavoriteIcon /></ListItemIcon>
-                        <ListItemText primary="Понравившееся" />
-                    </ListItem>
+                    <Link href="/liked">
+                        <ListItem button>
+                            <ListItemIcon><FavoriteIcon /></ListItemIcon>
+                            <ListItemText primary="Понравившееся" />
+                        </ListItem>
+                    </Link>
                 </List>
                 <Divider />
                 <List>
@@ -106,10 +108,12 @@ const useNav = isAdmin => {
                     <ListItemText primary="Главная" />
                 </ListItem>
             </Link>
-            <ListItem button>
-                <ListItemIcon><FavoriteIcon /></ListItemIcon>
-                <ListItemText primary="Понравившееся" />
-            </ListItem>
+            <Link href="/liked">
+                <ListItem button>
+                    <ListItemIcon><FavoriteIcon /></ListItemIcon>
+                    <ListItemText primary="Понравившееся" />
+                </ListItem>
+            </Link>
             <Link href="/questions">
                 <ListItem button>
                     <ListItemIcon><HelpIcon /></ListItemIcon>

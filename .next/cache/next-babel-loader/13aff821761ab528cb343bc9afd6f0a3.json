@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\n\nconst {\n  default: LikedNews\n} = require(\"../components/News/LikedNews\");\n\nconst liked = () => {\n  return /*#__PURE__*/_jsx(LikedNews, {});\n};\n\nexport default liked;","map":null,"metadata":{},"sourceType":"module"}

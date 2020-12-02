@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\nimport Cards from \"../components/News/Cards\";\nexport default function Home() {\n  return /*#__PURE__*/_jsx(Cards, {});\n}","map":null,"metadata":{},"sourceType":"module"}

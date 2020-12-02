@@ -35,6 +35,7 @@ const NewsCard = ({post}) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  if(!post) return <></>
   return (
     <Card>
       <CardHeader
