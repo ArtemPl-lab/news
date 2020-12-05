@@ -58,11 +58,11 @@ router.post('/news', async (req, res) => {
     try {
         
         const {page} = req.body
-        const news = await News.find({visible: true}).skip((page-1)*10).limit(10).sort({pinned : -1})
-
+        let news = await News.find({visible: true}).sort({pinned: -1, '_id': -1}).skip((page-1)*10).limit(10);
         res.status(200).json(news)
 
     } catch (e) {
+        console.log(e);
         res.status(500).json({ message: 'Что-то пошло не так' })
     }
 })
@@ -121,7 +121,7 @@ router.post('/edit', auth, async (req, res) => {
 router.post('/page', async (req, res) => {
     try {
         const {id} = req.body
-        const news = await News.find({_id: id})
+        const news = await News.findOne({newsUrl: id})
         
         res.status(200).json(news)
 
@@ -140,13 +140,9 @@ router.post('/search', async (req, res) => {
         
         const {newsTitle} = req.body
 
-        News.find({$and : [{newsTitle: new RegExp(newsTitle, "i")}, {visible: true}]}, (err, doc) => {
-            if (err) return console.log(err);
+        const searching = await News.find({$and : [{newsTitle: new RegExp(newsTitle, "i")}, {visible: true}]});
 
-            // console.log(doc)
-          });
-
-          res.status(200).json({ message: 'Новость найдена' })
+          res.status(200).json(searching)
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })
     }
@@ -190,7 +186,18 @@ router.post('/pinned-news', async (req, res) => {
         res.status(500).json({ message: 'Что-то пошло не так' })
     }
 })
+router.post('/pin', async (req, res) => {
+    try {
+        const { id } = req.body;
+        let news = await News.findById(id);
+        news.pinned = !news.pinned;
+        await news.save();
+        console.log(news);
 
+    } catch (e) {
+        res.status(500).json({ message: 'Что-то пошло не так' })
+    }
+})
 
 //Вывод всех скрытых новостей
 

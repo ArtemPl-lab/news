@@ -7,7 +7,7 @@
   "/": "pages/index.html",
   "/liked": "pages/liked.html",
   "/politice": "pages/politice.html",
-  "/postPage/[url]": "pages/postPage/[url].html",
+  "/postPage/[url]": "pages/postPage/[url].js",
   "/post/add": "pages/post/add.html",
   "/post/edit/[url]": "pages/post/edit/[url].html",
   "/questions": "pages/questions.html",

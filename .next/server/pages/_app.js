@@ -118,6 +118,13 @@ module.exports = __webpack_require__("1TCz");
 
 /***/ }),
 
+/***/ "09cN":
+/***/ (function(module, exports) {
+
+module.exports = require("@material-ui/icons/KeyboardArrowUp");
+
+/***/ }),
+
 /***/ "0Bsm":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -261,7 +268,52 @@ var link_default = /*#__PURE__*/__webpack_require__.n(next_link);
 var head_ = __webpack_require__("xnum");
 var head_default = /*#__PURE__*/__webpack_require__.n(head_);
 
+// EXTERNAL MODULE: external "@material-ui/core/CssBaseline"
+var CssBaseline_ = __webpack_require__("AJJM");
+
+// EXTERNAL MODULE: external "@material-ui/core/useScrollTrigger"
+var useScrollTrigger_ = __webpack_require__("4ac1");
+var useScrollTrigger_default = /*#__PURE__*/__webpack_require__.n(useScrollTrigger_);
+
+// EXTERNAL MODULE: external "@material-ui/core/Box"
+var Box_ = __webpack_require__("ZkBw");
+
+// EXTERNAL MODULE: external "@material-ui/core/Container"
+var Container_ = __webpack_require__("Uynj");
+
+// EXTERNAL MODULE: external "@material-ui/core/Fab"
+var Fab_ = __webpack_require__("ZVwq");
+var Fab_default = /*#__PURE__*/__webpack_require__.n(Fab_);
+
+// EXTERNAL MODULE: external "@material-ui/icons/KeyboardArrowUp"
+var KeyboardArrowUp_ = __webpack_require__("09cN");
+var KeyboardArrowUp_default = /*#__PURE__*/__webpack_require__.n(KeyboardArrowUp_);
+
+// EXTERNAL MODULE: external "@material-ui/core/Zoom"
+var Zoom_ = __webpack_require__("9E4/");
+var Zoom_default = /*#__PURE__*/__webpack_require__.n(Zoom_);
+
+// EXTERNAL MODULE: external "next/router"
+var router_ = __webpack_require__("4Q3z");
+
 // CONCATENATED MODULE: ./components/Header.jsx
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+
 
 
 
@@ -320,15 +372,67 @@ const useStyles = Object(styles_["makeStyles"])(theme => ({
         width: '20ch'
       }
     }
+  },
+  root: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+    zIndex: 10
   }
 }));
 
-const Header = () => {
+function ScrollTop(props) {
+  const {
+    children,
+    window
+  } = props;
+  const classes = useStyles();
+  const trigger = useScrollTrigger_default()({
+    target: window ? window() : undefined,
+    disableHysteresis: true,
+    threshold: 100
+  });
+
+  const handleClick = event => {
+    const anchor = (event.target.ownerDocument || document).querySelector('#back-to-top-anchor');
+
+    if (anchor) {
+      anchor.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  };
+
+  return /*#__PURE__*/Object(jsx_runtime_["jsx"])(Zoom_default.a, {
+    in: trigger,
+    children: /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
+      onClick: handleClick,
+      role: "presentation",
+      className: classes.root,
+      children: children
+    })
+  });
+}
+
+const Header = props => {
   const classes = useStyles();
   const {
     menu
   } = Object(external_mobx_store_provider_["useStore"])();
-  return /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
+  const {
+    0: searchValue,
+    1: setSearchValue
+  } = Object(external_react_["useState"])('');
+  const router = Object(router_["useRouter"])();
+
+  const onSubmit = e => {
+    e.preventDefault();
+    router.push(`/search/${searchValue}`);
+    console.log(searchValue);
+  };
+
+  return /*#__PURE__*/Object(jsx_runtime_["jsxs"])(jsx_runtime_["Fragment"], {
     children: [/*#__PURE__*/Object(jsx_runtime_["jsxs"])(head_default.a, {
       children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("title", {
         children: "\u041D\u043E\u0432\u043E\u0441\u0442\u0438 \u043E \u0431\u0438\u0437\u043D\u0435\u0441\u0435 \u0438 \u043E \u0444\u0440\u0430\u043D\u0448\u0438\u0437\u0430\u0445"
@@ -336,8 +440,9 @@ const Header = () => {
         name: "description",
         content: "\u041D\u043E\u0432\u043E\u0441\u0442\u0438. \u0413\u043B\u0430\u0432\u043D\u044B\u0435 \u043D\u043E\u0432\u043E\u0441\u0442\u0438 \u0432 \u0441\u0444\u0435\u0440\u0435 \u0431\u0438\u0437\u043D\u0435\u0441\u0430 \u0438 \u0444\u0440\u0430\u043D\u0447\u0430\u0439\u0437\u0438\u043D\u0433\u0430. \u0410\u043A\u0442\u0443\u0430\u043B\u044C\u043D\u044B\u0435 \u043D\u043E\u0432\u043E\u0441\u0442\u0438 \u043E \u0444\u0440\u0430\u043D\u0448\u0438\u0437\u0430\u0445"
       })]
+    }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(Toolbar_default.a, {
+      id: "back-to-top-anchor"
     }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(AppBar_default.a, {
-      position: "static",
       children: /*#__PURE__*/Object(jsx_runtime_["jsxs"])(Toolbar_default.a, {
         children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(IconButton_default.a, {
           edge: "start",
@@ -352,26 +457,38 @@ const Header = () => {
           noWrap: true,
           children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(link_default.a, {
             href: "/",
-            children: "\u041D\u043E\u0432\u043E\u0441\u0442\u0438.\u0440\u0443"
+            children: "\u041D\u043E\u0432\u043E\u0441\u0442\u0438 \u043E \u0444\u0440\u0430\u043D\u0448\u0438\u0437\u0430\u0445 \u0438 \u0431\u0438\u0437\u043D\u0435\u0441\u0435"
           })
         }), /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
           className: classes.search,
           children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
             className: classes.searchIcon,
             children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(Search_default.a, {})
-          }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(InputBase_default.a, {
-            placeholder: "\u041F\u043E\u0438\u0441\u043A\u2026",
-            classes: {
-              root: "inputRoot",
-              input: classes.inputInput
-            },
-            inputProps: {
-              'aria-label': 'search'
-            }
+          }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("form", {
+            onSubmit: onSubmit,
+            children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(InputBase_default.a, {
+              placeholder: "\u041F\u043E\u0438\u0441\u043A\u2026",
+              classes: {
+                root: "inputRoot",
+                input: classes.inputInput
+              },
+              value: searchValue,
+              inputProps: {
+                'aria-label': 'search'
+              },
+              onChange: e => setSearchValue(e.target.value)
+            })
           })]
         })]
       })
-    })]
+    }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(ScrollTop, _objectSpread(_objectSpread({}, props), {}, {
+      children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(Fab_default.a, {
+        color: "primary",
+        size: "small",
+        "aria-label": "scroll back to top",
+        children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(KeyboardArrowUp_default.a, {})
+      })
+    }))]
   });
 };
 
@@ -714,13 +831,13 @@ const NavigationPanel = ({}) => {
 var external_mobx_ = __webpack_require__("VBo9");
 
 // CONCATENATED MODULE: ./stores/menu-store.js
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function menu_store_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 class menu_store_MenuStore {
   constructor() {
-    _defineProperty(this, "show", false);
+    menu_store_defineProperty(this, "show", false);
 
     Object(external_mobx_["makeAutoObservable"])(this);
   }
@@ -742,9 +859,9 @@ class menu_store_MenuStore {
 const menuStore = new menu_store_MenuStore();
 /* harmony default export */ var menu_store = (menuStore);
 // CONCATENATED MODULE: ./stores/posts-store.js
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function posts_store_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { posts_store_defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function posts_store_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { posts_store_ownKeys(Object(source), true).forEach(function (key) { posts_store_defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { posts_store_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function posts_store_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -786,6 +903,16 @@ class posts_store_PostsStore {
     }
   }
 
+  togglePinned(post) {
+    this.posts = this.posts.map(postI => {
+      if (postI._id === post._id) {
+        postI.pinned = !postI.pinned;
+      }
+
+      return postI;
+    });
+  }
+
   async loadPosts() {
     let likedLast = Object(external_react_use_cookie_["getCookie"])('likedPosts');
     likedLast = likedLast ? likedLast : "[]";
@@ -812,11 +939,12 @@ class posts_store_PostsStore {
 
       ;
       let likedPostsId = new Set(likedJson);
-      json = json.map(news => _objectSpread(_objectSpread({}, news), {}, {
+      json = json.map(news => posts_store_objectSpread(posts_store_objectSpread({}, news), {}, {
         isLiked: likedPostsId.has(news._id)
       }));
       let concatPosts = this.posts.concat(json);
       this.posts = [...new Set(concatPosts.map(JSON.stringify))].map(JSON.parse);
+      console.log(this.posts);
       this.page++;
       this.load = false;
     }
@@ -932,7 +1060,7 @@ const MyApp = ({
   }));
 
   if (user_store.userToken) {
-    let client = new W3CWebSocket('ws://newsbizness.ru:5001/', 'echo-protocol');
+    let client = new W3CWebSocket('ws://localhost:5001/', 'echo-protocol');
 
     client.onerror = function () {};
 
@@ -1092,6 +1220,20 @@ module.exports = require("@material-ui/icons/Menu");
 
 /***/ }),
 
+/***/ "4Q3z":
+/***/ (function(module, exports) {
+
+module.exports = require("next/router");
+
+/***/ }),
+
+/***/ "4ac1":
+/***/ (function(module, exports) {
+
+module.exports = require("@material-ui/core/useScrollTrigger");
+
+/***/ }),
+
 /***/ "4rJZ":
 /***/ (function(module, exports) {
 
@@ -1237,10 +1379,24 @@ module.exports = require("mobx-store-provider");
 
 /***/ }),
 
+/***/ "9E4/":
+/***/ (function(module, exports) {
+
+module.exports = require("@material-ui/core/Zoom");
+
+/***/ }),
+
 /***/ "9Pu4":
 /***/ (function(module, exports) {
 
 module.exports = require("@material-ui/core/styles");
+
+/***/ }),
+
+/***/ "AJJM":
+/***/ (function(module, exports) {
+
+module.exports = require("@material-ui/core/CssBaseline");
 
 /***/ }),
 
@@ -1367,6 +1523,13 @@ module.exports = require("@material-ui/icons/Description");
 /***/ (function(module, exports) {
 
 module.exports = require("@material-ui/core/Typography");
+
+/***/ }),
+
+/***/ "Uynj":
+/***/ (function(module, exports) {
+
+module.exports = require("@material-ui/core/Container");
 
 /***/ }),
 
@@ -1555,6 +1718,20 @@ module.exports = require("@material-ui/icons/Home");
 /***/ (function(module, exports) {
 
 module.exports = require("@material-ui/icons/PlaylistAdd");
+
+/***/ }),
+
+/***/ "ZVwq":
+/***/ (function(module, exports) {
+
+module.exports = require("@material-ui/core/Fab");
+
+/***/ }),
+
+/***/ "ZkBw":
+/***/ (function(module, exports) {
+
+module.exports = require("@material-ui/core/Box");
 
 /***/ }),
 

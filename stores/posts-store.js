@@ -28,6 +28,14 @@ class PostsStore {
       setCookie('likedPosts', JSON.stringify(currentLiked));
     }
   }
+  togglePinned(post){
+    this.posts = this.posts.map(postI => {
+      if(postI._id === post._id){
+        postI.pinned = !postI.pinned;
+      }
+      return postI;
+    });
+  }
   async loadPosts(){
     let likedLast = getCookie('likedPosts');
     likedLast = (likedLast ? likedLast : "[]");
@@ -53,6 +61,7 @@ class PostsStore {
       json = json.map(news => ({...news, isLiked: likedPostsId.has(news._id)}));
       let concatPosts = this.posts.concat(json);
       this.posts = [...new Set(concatPosts.map(JSON.stringify))].map(JSON.parse);
+      console.log(this.posts);
       this.page++;
       this.load = false;
     }

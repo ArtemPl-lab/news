@@ -36,14 +36,14 @@ async function firstCheck(sitemapLink, selectors, resourse){
                 type: "warning"
             });
             console.log(news);
-            if(news.title){
+            if(news.title && news.content){
                 let newsUrl = news.title.replace(/[^a-zA-Z0-9]/g, '');
                 newsUrl = cyrillicToTranslit().transform(news.title.toLowerCase(),"-");
                 newsUrl = newsUrl.replace(/[&\/\\#, +()$~.'":*<>{}]/g, '');
 
                 let now = new Date
                 now = now.toDateString().replace(/[^ ]+ /, '')
-    
+                console.log(news.img);
                 const page = new News({
                     _id: new mongoose.Types.ObjectId(),
                     newsTitle: news.title,
@@ -55,11 +55,12 @@ async function firstCheck(sitemapLink, selectors, resourse){
                     longDesc: news.content.slice(0, 300)+"...",
                     visible : true,
                     pinned : false,
-                    img : news.img,
+                    img: news.img,
                     resourceUrl : sitemap[i]
                 });
-                console.log(newsUrl);
-                console.log(now);
+                // console.log(page);
+                // console.log(newsUrl);
+                // console.log(now);
                 page.save((err) => {
                     if (err) console.log("Уже есть бд");
                 });

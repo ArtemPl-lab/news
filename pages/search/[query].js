@@ -16,7 +16,7 @@ const PostPage  = () => {
                 newsTitle: router.query.query
             })
         });
-        console.log(router.query.query);
+        console.log(await response.json());
     },[router.query.query]);
     if(!posts) return <CircularProgress />
     return (

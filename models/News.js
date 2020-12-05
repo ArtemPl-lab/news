@@ -37,7 +37,7 @@ const news = new Schema({
         dropDups: true,
         unique : true
     },
-    img : {
+    img: {
         type : String
     },
     resource: [{ type: Types.ObjectId, ref: "Resource" }]

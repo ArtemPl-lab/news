@@ -18,6 +18,8 @@ import { CardActionArea } from '@material-ui/core';
 import Link from 'next/link';
 import { useStore } from "mobx-store-provider";
 import { observer } from 'mobx-react';
+import MenuCard from './menuCard';
+import Hidden from '@material-ui/core/Hidden';
 const useStyles = makeStyles((theme) => ({
   expand: {
     transform: 'rotate(0deg)',
@@ -25,7 +27,10 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
-  }
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
 }));
 
 const NewsCard = ({post}) => {
@@ -36,19 +41,19 @@ const NewsCard = ({post}) => {
     setExpanded(!expanded);
   };
   if(!post) return <></>
+  let url = new URL(post.resourceUrl);
+
   return (
     <Card>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe">
-            R
+            A
           </Avatar>
         }
         action={
           user.userToken ? 
-        <IconButton aria-label="settings">
-          <MoreVertIcon /> 
-        </IconButton> : ()=>{}
+        <MenuCard post={post} /> : ()=>{}
         }
         title={post.newsTitle.slice(0, 30)}
         subheader={post.added_at}
@@ -57,7 +62,7 @@ const NewsCard = ({post}) => {
         <CardActionArea>
             <CardMedia 
                 className="media"
-                image="https://material-ui.com/static/images/cards/paella.jpg"
+                image={`${post.img}`}
                 title="Paella dish"
             />
             <CardContent>
@@ -74,20 +79,22 @@ const NewsCard = ({post}) => {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+        <Hidden only={['sm','md', 'lg']}>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </Hidden>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{post.newsContent.slice(0, 500)}</Typography>
+          <Typography paragraph>{post.newsContent}</Typography>
         </CardContent>
       </Collapse>
     </Card>

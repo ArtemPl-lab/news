@@ -10,7 +10,16 @@ import IconButton from '@material-ui/core/IconButton';
 import { observer } from "mobx-react";
 import { useStore } from "mobx-store-provider";
 import Link from 'next/link';
-import Head from 'next/head'
+import Head from 'next/head';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
+import Fab from '@material-ui/core/Fab';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Zoom from '@material-ui/core/Zoom';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
@@ -55,18 +64,57 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  root: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+    zIndex: 10
+  },
 }));
 
-const Header = () => {
+function ScrollTop(props) {
+  const { children, window } = props;
+  const classes = useStyles();
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+    disableHysteresis: true,
+    threshold: 100,
+  });
+
+  const handleClick = (event) => {
+    const anchor = (event.target.ownerDocument || document).querySelector('#back-to-top-anchor');
+
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  return (
+    <Zoom in={trigger}>
+      <div onClick={handleClick} role="presentation" className={classes.root}>
+        {children}
+      </div>
+    </Zoom>
+  );
+}
+const Header = (props) => {
   const classes = useStyles();
   const { menu } = useStore();
+  const [searchValue, setSearchValue] = useState(''); 
+  const router = useRouter();
+  const onSubmit = (e) => {
+    e.preventDefault();
+    router.push(`/search/${searchValue}`);
+    console.log(searchValue);
+  }
   return (
-    <div>
+    <>
       <Head>
         <title>Новости о бизнесе и о франшизах</title>
         <meta name="description" content="Новости. Главные новости в сфере бизнеса и франчайзинга. Актуальные новости о франшизах" />
       </Head>
-      <AppBar position="static">
+      <Toolbar id="back-to-top-anchor" />
+      <AppBar>
         <Toolbar>
         <IconButton
                 edge="start"
@@ -79,25 +127,34 @@ const Header = () => {
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link href="/">
-              Новости.ру
+             Новости о франшизах и бизнесе
             </Link>
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <InputBase
-              placeholder="Поиск…"
-              classes={{
-                root: "inputRoot",
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
+            <form onSubmit={onSubmit}>
+              <InputBase
+                placeholder="Поиск…"
+                classes={{
+                  root: "inputRoot",
+                  input: classes.inputInput,
+                }}
+                value={searchValue}
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={(e)=>setSearchValue(e.target.value)}
+              />
+            </form>
           </div>
         </Toolbar>
       </AppBar>
-    </div>
+      <ScrollTop {...props}>
+        <Fab color="primary" size="small" aria-label="scroll back to top">
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </ScrollTop>
+    </>
   );
 }
 
