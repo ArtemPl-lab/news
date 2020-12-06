@@ -59,7 +59,7 @@ const useNav = isAdmin => {
                     <Link href="/liked">
                         <ListItem button>
                             <ListItemIcon><FavoriteIcon /></ListItemIcon>
-                            <ListItemText primary="Понравившееся" />
+                            <ListItemText primary="Понравившиеся" />
                         </ListItem>
                     </Link>
                 </List>
@@ -111,7 +111,7 @@ const useNav = isAdmin => {
             <Link href="/liked">
                 <ListItem button>
                     <ListItemIcon><FavoriteIcon /></ListItemIcon>
-                    <ListItemText primary="Понравившееся" />
+                    <ListItemText primary="Понравившиеся" />
                 </ListItem>
             </Link>
             <Link href="/questions">

@@ -167,7 +167,7 @@ const PostPage = ({
 
 async function getServerSideProps(context) {
   // Fetch data from external API
-  const res = await fetch('http://localhost:3000/api/news/page', {
+  const res = await fetch('https://newsbizness.ru/api/news/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'

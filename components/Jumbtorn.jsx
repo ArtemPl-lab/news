@@ -53,7 +53,7 @@ export default function Jumbtorn() {
               Главные новости в сфере бизнеса и франчайзинга
             </Typography>
             <Typography variant="h5" color="inherit" paragraph>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime tenetur mollitia, nobis numquam veniam temporibus dolor alias. Est reprehenderit voluptatum ex animi cupiditate possimus asperiores autem odio, voluptas inventore. Officia!
+              На нашем сайте Вы можете прочитать все актуальные новости о бизнесе, новости о франчайзинге, отзывы владельцев о франшизах. Каталог новостей пополняется ежедневно, будьте всегда в курсе новых событий!
             </Typography>
           </div>
         </Grid>

@@ -434,7 +434,13 @@ const Header = props => {
 
   return /*#__PURE__*/Object(jsx_runtime_["jsxs"])(jsx_runtime_["Fragment"], {
     children: [/*#__PURE__*/Object(jsx_runtime_["jsxs"])(head_default.a, {
-      children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("title", {
+      children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("meta", {
+        name: "yandex-verification",
+        content: "9cef4f8a47c60343"
+      }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("meta", {
+        name: "google-site-verification",
+        content: "QqEL4jMlJKLp2PYfkVdZPUx6-G5UCbRM8Ulv1Fx-ntE"
+      }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("title", {
         children: "\u041D\u043E\u0432\u043E\u0441\u0442\u0438 \u043E \u0431\u0438\u0437\u043D\u0435\u0441\u0435 \u0438 \u043E \u0444\u0440\u0430\u043D\u0448\u0438\u0437\u0430\u0445"
       }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("meta", {
         name: "description",
@@ -488,7 +494,13 @@ const Header = props => {
         "aria-label": "scroll back to top",
         children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(KeyboardArrowUp_default.a, {})
       })
-    }))]
+    })), /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
+      dangerouslySetInnerHTML: {
+        __html: `
+      <!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(70158523, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/70158523" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+      `
+      }
+    })]
   });
 };
 
@@ -664,7 +676,7 @@ const useNav = isAdmin => {
             children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(ListItemIcon_default.a, {
               children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(Favorite_default.a, {})
             }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(ListItemText_default.a, {
-              primary: "\u041F\u043E\u043D\u0440\u0430\u0432\u0438\u0432\u0448\u0435\u0435\u0441\u044F"
+              primary: "\u041F\u043E\u043D\u0440\u0430\u0432\u0438\u0432\u0448\u0438\u0435\u0441\u044F"
             })]
           })
         })]
@@ -739,7 +751,7 @@ const useNav = isAdmin => {
           children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(ListItemIcon_default.a, {
             children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(Favorite_default.a, {})
           }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(ListItemText_default.a, {
-            primary: "\u041F\u043E\u043D\u0440\u0430\u0432\u0438\u0432\u0448\u0435\u0435\u0441\u044F"
+            primary: "\u041F\u043E\u043D\u0440\u0430\u0432\u0438\u0432\u0448\u0438\u0435\u0441\u044F"
           })]
         })
       }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(link_default.a, {
