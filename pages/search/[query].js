@@ -30,12 +30,21 @@ const PostPage  = () => {
                 </Typography> 
             </Container>
             <Container>
+                {!posts.length 
+                    ?
+                        <Typography>
+                            <h4>К сожалению, ничего не найдено =(</h4>
+                        </Typography> 
+                    :
+                        <></>
+                }
                 <Grid spacing={3} container>
                 {posts.map(post => (
                     <Grid item xs={12} md={3} sm={6} key={post.url}>
                     <NewsCard post={post}/>
                     </Grid>
-                ))}
+                ))
+                }
                 </Grid>
             </Container>
         </>
