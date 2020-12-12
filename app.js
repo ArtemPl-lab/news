@@ -32,7 +32,7 @@ app.use("/api/news'", require("./routes/news.routes.js"))
 app.use('/api/auth', require('./routes/auth.routes.js'))
 app.use('/api/resources', require('./routes/resources.routes.js'))
 app.use("/api/resources'", require("./routes/resources.routes.js"))
-
+app.use('/api/sitemap', require('./routes/sitemap.routes.js'))
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);

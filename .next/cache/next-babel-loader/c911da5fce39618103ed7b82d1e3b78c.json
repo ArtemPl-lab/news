@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { createProxyMiddleware } from 'http-proxy-middleware';\nexport default createProxyMiddleware({\n  target: \"http://localhost:5000\",\n  logLevel: \"debug\"\n});","map":null,"metadata":{},"sourceType":"module"}
