@@ -4,15 +4,15 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
+import InboxIcon from '@material-ui/icons/MoveToInbox'
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import { useStore } from "mobx-store-provider";
 import { observer } from 'mobx-react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #d3d4d5',
@@ -67,6 +67,32 @@ export default observer(function MenuCard({ post }) {
     });
     setAnchorEl(null);
   }
+  const deletePost = async () => {
+    postsStore.deletePost(post);
+    fetch('/api/news/delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({
+          id: post._id
+      })
+    });
+    setAnchorEl(null);
+  }
+  const toggleVisible = async () => {
+    postsStore.togglePinned(post);
+    fetch('/api/news/pin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({
+          id: post._id
+      })
+    });
+    setAnchorEl(null);
+  }
   return (
     <div>
       <IconButton
@@ -96,17 +122,17 @@ export default observer(function MenuCard({ post }) {
         }
           <ListItemText primary={post.pinned ? "Открепить": "Закрепить"} />
         </StyledMenuItem>
-        <StyledMenuItem>
+        <StyledMenuItem onClick={deletePost}>
           <ListItemIcon>
-            <DraftsIcon fontSize="small" />
+            <DeleteIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Drafts" />
+          <ListItemText primary="Удалить" />
         </StyledMenuItem>
         <StyledMenuItem>
           <ListItemIcon>
-            <InboxIcon fontSize="small" />
+            <VisibilityOffIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Inbox" />
+          <ListItemText primary={post.visible ? "Скрыть" : "Показывать"} />
         </StyledMenuItem>
       </StyledMenu>
     </div>

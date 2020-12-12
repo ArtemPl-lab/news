@@ -12,10 +12,10 @@ module.exports = router;
 
 //api/news/createNews
 
-router.post('/createNews', auth, async (req, res) => {
+router.post('/createNews', async (req, res) => {
     try {
         
-        const {newsTitle, newsContent, tabTitle, tabDesc, longDesc, resource_id, resourceUrl} = req.body
+        const {newsTitle, newsContent, tabTitle, tabDesc, longDesc } = req.body
 
         let newsUrl = cyrillicToTranslit().transform(newsTitle.toLowerCase(),"-");
         newsUrl = newsUrl.replace(/[&\/\\#, +()$~.'":*<>{}]/g, '');
@@ -33,9 +33,7 @@ router.post('/createNews', auth, async (req, res) => {
             tabDesc,
             longDesc,
             visible : true,
-            pinned : false,
-            resource_id : resource_id,
-            resourceUrl
+            pinned : false
         })
 
         news.save((err) => {
@@ -153,7 +151,7 @@ router.post('/search', async (req, res) => {
 
 //api/news/delete
 
-router.post('/delete', auth, async (req, res) => {
+router.post('/delete', async (req, res) => {
     try {        
         const {id} = req.body
 
@@ -164,7 +162,7 @@ router.post('/delete', auth, async (req, res) => {
             // console.log(result);
         });
 
-        res.status(500).json({ message: 'Новость удалена' })
+        res.status(200).json({ message: 'Новость удалена' })
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })
     }

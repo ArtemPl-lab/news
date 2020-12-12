@@ -4,7 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Editor } from '@tinymce/tinymce-react';
 import Button from '@material-ui/core/Button';
@@ -50,22 +50,48 @@ const useStyles = makeStyles((theme) => ({
 export default observer(function SimpleTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [formData, setFormData] = useState({
+    newsTitle: '',
+    newsContent: '',
+    tabTitle: '',
+    tabDesc: '',
+    longDesc: '',
+    img: ''
+  });
   const { user } = useStore();
   const router = useRouter();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const handleEditorChange = (e) => {
-    console.log(
-      'Content was updated:',
-      e.target.getContent()
-    );
+    setFormData(data => ({
+      ...data,
+      newsContent: e.target.getContent()
+    }));
+  }
+  const setterForm = e => {
+    setFormData(data => ({
+      ...data,
+      [e.target.name]: e.target.value
+    }));
+  }
+  const formSubmitHandler = async e => {
+    e.preventDefault();
+    await fetch('/api/news/createNews', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(formData)
+    });
+    // router.push('/');
+    // console.log(formData);
   }
   useEffect(()=>{
     if(!user.userToken) router.push('/');
   }, [user.userToken]);
   return (
-    <div className={classes.root}>
+    <form className={classes.root} onSubmit={formSubmitHandler}>
         <AppBar position="static">
             <Tabs value={value} onChange={handleChange} 
             aria-label="simple tabs example"          
@@ -77,7 +103,14 @@ export default observer(function SimpleTabs() {
             </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-            <TextField id="outlined-basic" label="Название" variant="outlined" className="add-title-field"/>
+            <TextField 
+            id="outlined-basic" 
+            label="Название" 
+            variant="outlined" 
+            className="add-title-field" 
+            onChange={setterForm}
+            name="newsTitle"
+            value={formData.newsTitle}/>
             <Editor
                 initialValue="<p>Initial content</p>"
                 init={{
@@ -96,17 +129,49 @@ export default observer(function SimpleTabs() {
                 }}
                 onChange={handleEditorChange}
                 apiKey="llye9u61s05d1t8wpej0br4kyuqomj0ioj0g97bqkdnqxszo"
+                value={formData.newsContent}
             />
-            <Button variant="contained" color="primary" className="btn-sub-add">
+            <Button variant="contained" color="primary" className="btn-sub-add"  type="submit">
                 Опубликовать
             </Button>
         </TabPanel>
         <TabPanel value={value} index={1}>
-            Item Two
+          <TextField 
+            id="outlined-basic" 
+            label="Заголовок в поисковике(title)" 
+            variant="outlined" 
+            className="add-title-field" 
+            onChange={setterForm}
+            name="tabTitle"
+            value={formData.tabTitle}/>
+            <TextField
+              id="outlined-multiline-static"
+              label="Описание в поисковике(meta description)"
+              multiline
+              variant="outlined"
+              onChange={setterForm}
+              name="tabDesc"
+              value={formData.tabDesc}
+              fullWidth
+              rowsMin={10}
+            />
+            <Button variant="contained" color="primary" className="btn-sub-add"  type="submit">
+                Опубликовать
+            </Button>
         </TabPanel>
         <TabPanel value={value} index={2}>
-            Item Three
+          <TextField 
+            id="outlined-basic" 
+            label="Заголовок в поисковике(title)" 
+            variant="outlined" 
+            className="add-title-field" 
+            onChange={setterForm}
+            name="img"
+            value={formData.img}/>
+            <Button variant="contained" color="primary" className="btn-sub-add" type="submit">
+                Опубликовать
+            </Button>
         </TabPanel>
-    </div>
+    </form>
   );
 })

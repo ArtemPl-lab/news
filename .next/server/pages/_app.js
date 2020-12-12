@@ -925,6 +925,20 @@ class posts_store_PostsStore {
     });
   }
 
+  deletePost(post) {
+    this.posts = this.posts.filter(el => el._id !== post._id);
+  }
+
+  toggleVisible(post) {
+    this.posts = this.posts.map(postI => {
+      if (postI._id === post._id) {
+        postI.visible = !postI.visible;
+      }
+
+      return postI;
+    });
+  }
+
   async loadPosts() {
     let likedLast = Object(external_react_use_cookie_["getCookie"])('likedPosts');
     likedLast = likedLast ? likedLast : "[]";
