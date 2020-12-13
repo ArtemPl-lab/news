@@ -2,17 +2,22 @@ const parseIntoBd = require("./includes/parseIntoBd.js")
 const Resource = require("./models/Resource")
 
 async function startDaemon() {
-        let resource = await Resource.find({checkingPeriod : {$ne : 0}})
+try {
+    Resource.find({checkingPeriod : {$ne : 0}}, (err, resource) => {
         console.log(resource);
+        if (err) return console.log(err);
         for (let i = 0; i < resource.length; i++) {
+    
             setInterval(function() {
-                try{
-                    parseIntoBd(resource[i])
-                }
-                catch(e){
-
-                }
-            }, 1000 * resource[i].checkingPeriod);
+            parseIntoBd(resource[i])
+            }, 60000 * resource[i].checkingPeriod);
+        
         }
+    })
+    
+} catch (e) {
+    console.log(e);
+}
+    
 }
 module.exports = startDaemon;

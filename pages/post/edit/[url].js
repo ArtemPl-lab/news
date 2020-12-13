@@ -89,7 +89,7 @@ const EditPost  = () => {
             },
             body: JSON.stringify(formValues)
         });
-        // router.push(`/postPage/${router.query.url}`);
+        router.push(`/postPage/${router.query.url}`);
         console.log(formValues);
     }
     const handleEditorChange = (e) => {

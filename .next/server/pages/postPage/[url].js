@@ -125,6 +125,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var mobx_store_provider__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(mobx_store_provider__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("xnum");
 /* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("cDcd");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -138,6 +141,7 @@ const PostPage = ({
   post
 }) => {
   const router = Object(next_router__WEBPACK_IMPORTED_MODULE_2__["useRouter"])();
+  const ref = Object(react__WEBPACK_IMPORTED_MODULE_6__["useRef"])(null);
   const {
     postsStore
   } = Object(mobx_store_provider__WEBPACK_IMPORTED_MODULE_4__["useStore"])();
@@ -145,13 +149,16 @@ const PostPage = ({
   if (!postContent) return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("p", {
     children: "\u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430"
   });
+  Object(react__WEBPACK_IMPORTED_MODULE_6__["useEffect"])(() => {
+    if (ref) ref.current.innerHTML = postContent.newsContent;
+  }, [ref]);
   return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["Fragment"], {
     children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(next_head__WEBPACK_IMPORTED_MODULE_5___default.a, {
       children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("title", {
-        children: postContent.newsTitle
+        children: postContent.tabTitle
       }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("meta", {
         name: "description",
-        content: postContent.newsContent
+        content: postContent.tabDesc
       })]
     }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Container"], {
       children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("h1", {
@@ -159,9 +166,7 @@ const PostPage = ({
       }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("p", {
         children: postContent.date
       }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("p", {
-        dangerouslySetInnerHTML: {
-          __html: postContent.newsContent
-        }
+        ref: ref
       })]
     })]
   });
@@ -210,6 +215,13 @@ module.exports = require("react/jsx-runtime");
 /***/ (function(module, exports) {
 
 module.exports = require("@material-ui/core");
+
+/***/ }),
+
+/***/ "cDcd":
+/***/ (function(module, exports) {
+
+module.exports = require("react");
 
 /***/ }),
 

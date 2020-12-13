@@ -60,14 +60,14 @@ const NewsCard = ({post}) => {
       />
       <Link href={`/postPage/${post.newsUrl}`}>
         <CardActionArea>
-            <CardMedia 
+            { post.img ? <CardMedia 
                 className="media"
                 image={`${post.img}`}
                 title="Paella dish"
-            />
+            /> : ''}
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {post.newsContent.slice(0,50)}...
+                  {post.img ? post.newsContent.slice(0,50) : post.newsContent.slice(0,200)}...
                 </Typography>
             </CardContent>
         </CardActionArea>

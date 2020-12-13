@@ -84,31 +84,48 @@ router.post('/likedNews', async (req, res) => {
 
 router.post('/edit', async (req, res) => {
     try {
-        const {id,newsTitle, newsContent, newsUrl, resource_id, tabTitle, tabDesc, longDesc, resourceUrl, visible, pinned, added_at} = req.body
-        const news = await News.find({_id: id})
+        let {_id,newsTitle, newsContent, newsUrl, resource_id, tabTitle, tabDesc, longDesc, resourceUrl, visible, pinned, added_at} = req.body
         
-        News.findOneAndUpdate({_id : id}, {
-            newsTitle: newsTitle || news.newsTitle, 
-            newsContent: newsContent || news.newsContent, 
-            newsUrl: newsUrl || news.newsUrl,
-            added_at: added_at || news.added_at, 
-            resource_id : resource_id || news.resource_id, 
-            tabTitle: tabTitle || news.tabTitle,  
-            tabDesc: tabDesc || news.tabDesc, 
-            longDesc : longDesc || news.longDesc,
-            visible : visible || news.visible,
-            resourceUrl : resourceUrl || news.resourceUrl,
-            pinned : pinned || news.pinned
-        }, (err, result) => {
+        News.findById({_id}, (err,news) => {
             if (err) return console.log(err);
-            // console.log(result);
+
+            newsTitle = newsTitle ? newsTitle : news.newsTitle
+            newsContent = newsContent ? newsContent : news.newsContent
+            newsUrl = newsUrl ? newsUrl : news.newsUrl 
+            added_at = added_at ? added_at : news.added_at
+            tabTitle = tabTitle ? tabTitle : news.tabTitle
+            tabDesc = tabDesc ? tabDesc : news.tabDesc
+            longDesc = longDesc ? longDesc : news.longDesc
+            visible = visible ? visible : news.visible
+            resourceUrl = resourceUrl ? resourceUrl : news.resourceUrl
+            pinned = pinned ? pinned : news.pinned
+            added_at = added_at ? added_at : news.added_at
+
+            console.log(news.newsTitle);
+
+            News.findByIdAndUpdate({_id}, {
+                newsTitle, 
+                newsContent, 
+                newsUrl,
+                added_at, 
+                tabTitle,  
+                tabDesc, 
+                longDesc,
+                visible,
+                resourceUrl,
+                pinned
+            }, (err, result) => {
+                if (err) return console.log(err);
+                // console.log(result);
+            })
+
+            console.log(news);
+
+            res.status(200).json({ message: "Новость обновлена" })
         })
-
-        // console.log(news);
-
-        res.status(200).json({ message: "Новость обновлена" })
+        
     } catch (e) {
-        // console.log(e)
+        console.log(e)
     }
 })
 

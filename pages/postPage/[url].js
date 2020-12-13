@@ -3,21 +3,26 @@ import { useRouter } from 'next/router';
 import { observer } from 'mobx-react';
 import { useStore } from "mobx-store-provider";
 import Head from 'next/head';
+import { useRef, useEffect } from 'react';
 const PostPage  = ({ post }) => {
     const router = useRouter();
+    const ref = useRef(null);
     const { postsStore } = useStore();
     const postContent = postsStore.posts.find(post => post.newsUrl === router.query.url) || post;
     if(!postContent) return <p>Страница не найдена</p>
+    useEffect(()=>{
+        if(ref)ref.current.innerHTML = postContent.newsContent;
+    }, [ref]);
     return (
         <>
             <Head>
-                <title>{postContent.newsTitle}</title>
-                <meta name="description" content={postContent.newsContent} />
+                <title>{postContent.tabTitle}</title>
+                <meta name="description" content={postContent.tabDesc} />
             </Head>
             <Container>
                 <h1>{postContent.newsTitle}</h1>
                 <p>{postContent.date}</p>
-                <p dangerouslySetInnerHTML={{__html: postContent.newsContent}}/>
+                <p ref={ref}/>
             </Container>
         </>
     );

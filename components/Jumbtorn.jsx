@@ -11,14 +11,9 @@ theme = responsiveFontSizes(theme);
 
 const useStyles = makeStyles((theme) => ({
   mainFeaturedPost: {
-    position: 'relative',
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
-    backgroundImage: 'url(https://ua.news/wp-content/uploads/2020/07/labusinessportal.jpg)',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
   },
   overlay: {
     position: 'absolute',
@@ -43,12 +38,12 @@ export default function Jumbtorn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Paper className={classes.mainFeaturedPost} >
+      <Paper className={`${classes.mainFeaturedPost} jumbtorn`} >
       {/* {<img style={{ display: 'none' }} src={post.image} alt={post.imageText} />} */}
       <div className={classes.overlay} />
       <Grid container>
         <Grid item md={6}>
-          <div className={classes.mainFeaturedPostContent}>
+          <div className={`${classes.mainFeaturedPostContent} `}>
             <Typography component="h1" variant="h3" color="inherit" gutterBottom>
               Главные новости в сфере бизнеса и франчайзинга
             </Typography>
