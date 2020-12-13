@@ -15,7 +15,8 @@ class SitemapParser{
         sitemapObj.name === 'loc' ? sitemapSet.add(sitemapObj.value) : sitemapObj.children.map(child => this.parseSitemapToSet(child, sitemapSet));
     }
     async parseSitemap(link){
-        let sitemapLinks = new Set();
+        try {
+            let sitemapLinks = new Set();
         const response = await needle("get", link);
         if(response.parser === 'xml'){
             this.parseSitemapToSet(response.body, sitemapLinks);
@@ -34,11 +35,19 @@ class SitemapParser{
             }
         }
         return sitemapLinks;
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
     async startParse(){
-        await this.parseSitemap(this.sitemapAddress);
+        try {
+            await this.parseSitemap(this.sitemapAddress);
         this.stack = [...new Set(this.stack)];
-        return this.stack;
+        return this.stack;   
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
 

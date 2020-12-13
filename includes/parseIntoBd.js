@@ -4,10 +4,18 @@ const cyrillicToTranslit = require('cyrillic-to-translit-js');
 const SitemapParser = require('./SitemapParser');
 const PageParser = require('./HtmlPageParser');
 var needle = require('needle');
+
+
+
 let getAndParsePage = async (pageParserObj, link) => {
-    let { body: htmlPage }  = await needle("get", link);
-    return pageParserObj.startParse(htmlPage);
+    try {
+        let { body: htmlPage }  = await needle("get", link);
+        return pageParserObj.startParse(htmlPage);
+    } catch (e) {
+        console.log(e);
+    }
 }
+
 
 async function parseIntoBd(resource) {
     let sitemapParser = new SitemapParser(resource.sitemapLink, console.log);
@@ -16,21 +24,23 @@ async function parseIntoBd(resource) {
         body: resource.regularContent,
         img: resource.regularImg,
     });
-    let sitemapLinks = await sitemapParser.startParse(); 
-    for (let sitemapLinksElement of sitemapLinks) {
-        if (!(await News.findOne({ newsUrl : sitemapLinksElement }))) {
-            try {
-                let pageContent = await getAndParsePage(pageParser, sitemapLinksElement);
 
-                let newsUrl = newsUrl.replace(/[^a-zA-Z0-9]/g, '');
-                newsUrl = cyrillicToTranslit().transform(pageContent.title.toLowerCase(),"-");
-                newsUrl = newsUrl.replace(/[&\/\\#, +()$~.'":*<>{}]/g, '');
+    try {
+        let sitemapLinks = await sitemapParser.startParse(); 
 
-                if(pageContent.title){
+        for (let sitemapLinksElement of sitemapLinks) {
+            if (!(await News.findOne({ newsUrl : sitemapLinksElement }))) {
+                
+                let pageContent = await getAndParsePage(pageParser, sitemapLinksElement) || '';
+
+                let newsUrl = cyrillicToTranslit().transform(pageContent.title.toLowerCase(),"-") || '';
+                newsUrl = newsUrl.replace(/[&\/\\#, +()$~.'":*<>{}]/g, '') || '';
+
+                if(pageContent.title) {
 
                     let now = new Date
                     now = now.toDateString().replace(/[^ ]+ /, '')
-                    
+                        
 
                     let news = new News ({
                         _id: new mongoose.Types.ObjectId(),
@@ -52,10 +62,10 @@ async function parseIntoBd(resource) {
                     });
                 }
             }
-            catch(e) {
-                console.log(e);
-            }
         }
+    }
+    catch(e) {
+        console.log(e);
     }
 }
 module.exports = parseIntoBd;

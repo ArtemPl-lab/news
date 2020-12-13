@@ -4,8 +4,12 @@ const SitemapParser = require('./SitemapParser');
 const PageParser = require('./HtmlPageParser');
 
 let getAndParsePage = async (pageParserObj, link) => {
-    let { body: htmlPage }  = await needle("get", link);
-    return pageParserObj.startParse(htmlPage);
+    try {
+        let { body: htmlPage }  = await needle("get", link);
+        return pageParserObj.startParse(htmlPage);
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 async function sitemapCheck(sitemapLink, regularTitle, regularContent) {
@@ -29,14 +33,6 @@ async function sitemapCheck(sitemapLink, regularTitle, regularContent) {
     catch(e) {
         console.log(e);
     }
-    
-
-    
-
-    
-    
-    
-    
 }
 
 module.exports = { sitemapCheck, getAndParsePage }

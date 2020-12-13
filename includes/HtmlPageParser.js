@@ -5,7 +5,8 @@ class PageParser{
         this.elements = elements;
     }
     startParse(html){
-        let results = {};
+        try {
+            let results = {};
         var $ = cheerio.load(html);
         for(let key in this.elements){
             results = {
@@ -14,6 +15,10 @@ class PageParser{
             }
         }
         return results;
+        } catch (e) {
+            console.log(e);
+        }
+        
     }
 }
 
