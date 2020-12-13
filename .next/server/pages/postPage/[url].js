@@ -159,7 +159,9 @@ const PostPage = ({
       }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("p", {
         children: postContent.date
       }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("p", {
-        children: postContent.newsContent
+        dangerouslySetInnerHTML: {
+          __html: postContent.newsContent
+        }
       })]
     })]
   });
@@ -167,7 +169,7 @@ const PostPage = ({
 
 async function getServerSideProps(context) {
   // Fetch data from external API
-  const res = await fetch('https://newsbizness.ru/api/news/page', {
+  const res = await fetch('http://localhost:5000/api/news/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
@@ -176,7 +178,8 @@ async function getServerSideProps(context) {
       id: context.query.url
     })
   });
-  const data = await res.json(); // Pass data to the page via props
+  const data = await res.json();
+  console.log(data); // Pass data to the page via props
 
   return {
     props: {

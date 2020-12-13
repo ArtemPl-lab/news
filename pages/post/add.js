@@ -84,8 +84,8 @@ export default observer(function SimpleTabs() {
       },
       body: JSON.stringify(formData)
     });
-    // router.push('/');
-    // console.log(formData);
+    router.push('/');
+    console.log(formData);
   }
   useEffect(()=>{
     if(!user.userToken) router.push('/');

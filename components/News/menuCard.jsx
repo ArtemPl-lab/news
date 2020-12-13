@@ -13,6 +13,8 @@ import { observer } from 'mobx-react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import CreateIcon from '@material-ui/icons/Create';
+import { useRouter } from 'next/router';
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #d3d4d5',
@@ -47,6 +49,7 @@ const StyledMenuItem = withStyles((theme) => ({
 export default observer(function MenuCard({ post }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { postsStore } = useStore();
+  const router = useRouter();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -93,6 +96,9 @@ export default observer(function MenuCard({ post }) {
     });
     setAnchorEl(null);
   }
+  const editPost = () => {
+    router.push(`/post/edit/${post.newsUrl}`);
+  }
   return (
     <div>
       <IconButton
@@ -133,6 +139,12 @@ export default observer(function MenuCard({ post }) {
             <VisibilityOffIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary={post.visible ? "Скрыть" : "Показывать"} />
+        </StyledMenuItem>
+        <StyledMenuItem onClick={editPost}>
+          <ListItemIcon>
+            <CreateIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Редактировать" />
         </StyledMenuItem>
       </StyledMenu>
     </div>

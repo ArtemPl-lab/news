@@ -82,7 +82,7 @@ router.post('/likedNews', async (req, res) => {
 
 //api/news/edit
 
-router.post('/edit', auth, async (req, res) => {
+router.post('/edit', async (req, res) => {
     try {
         const {id,newsTitle, newsContent, newsUrl, resource_id, tabTitle, tabDesc, longDesc, resourceUrl, visible, pinned, added_at} = req.body
         const news = await News.find({_id: id})

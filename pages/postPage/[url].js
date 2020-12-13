@@ -17,14 +17,14 @@ const PostPage  = ({ post }) => {
             <Container>
                 <h1>{postContent.newsTitle}</h1>
                 <p>{postContent.date}</p>
-                <p>{postContent.newsContent}</p>
+                <p dangerouslySetInnerHTML={{__html: postContent.newsContent}}/>
             </Container>
         </>
     );
 }
 export async function getServerSideProps(context) {
     // Fetch data from external API
-    const res = await fetch('https://newsbizness.ru/api/news/page',{
+    const res = await fetch('http://localhost:5000/api/news/page',{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -34,7 +34,7 @@ export async function getServerSideProps(context) {
         })
     })
     const data = await res.json()
-  
+    console.log(data);
     // Pass data to the page via props
     return { props: { post: data } }
   }

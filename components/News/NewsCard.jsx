@@ -41,7 +41,7 @@ const NewsCard = ({post}) => {
     setExpanded(!expanded);
   };
   if(!post) return <></>
-  let url = new URL(post.resourceUrl);
+  // let url = new URL(post.resourceUrl);
 
   return (
     <Card>

@@ -34,8 +34,6 @@ const news = new Schema({
     },
     resourceUrl : {
         type : String,
-        dropDups: true,
-        unique : true
     },
     img: {
         type : String
