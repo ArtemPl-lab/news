@@ -557,7 +557,6 @@ var VisibilityOff_default = /*#__PURE__*/__webpack_require__.n(VisibilityOff_);
 
 // EXTERNAL MODULE: external "@material-ui/icons/SystemUpdateAlt"
 var SystemUpdateAlt_ = __webpack_require__("hcnr");
-var SystemUpdateAlt_default = /*#__PURE__*/__webpack_require__.n(SystemUpdateAlt_);
 
 // EXTERNAL MODULE: external "@material-ui/icons/PlaylistAdd"
 var PlaylistAdd_ = __webpack_require__("Ya9a");
@@ -565,7 +564,6 @@ var PlaylistAdd_default = /*#__PURE__*/__webpack_require__.n(PlaylistAdd_);
 
 // EXTERNAL MODULE: external "@material-ui/icons/AlarmAdd"
 var AlarmAdd_ = __webpack_require__("Kapq");
-var AlarmAdd_default = /*#__PURE__*/__webpack_require__.n(AlarmAdd_);
 
 // EXTERNAL MODULE: external "@material-ui/icons/Description"
 var Description_ = __webpack_require__("U4Md");
@@ -680,15 +678,8 @@ const useNav = isAdmin => {
             })]
           })
         })]
-      }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(Divider_default.a, {}), /*#__PURE__*/Object(jsx_runtime_["jsxs"])(List_default.a, {
-        children: [/*#__PURE__*/Object(jsx_runtime_["jsxs"])(ListItem_default.a, {
-          button: true,
-          children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(ListItemIcon_default.a, {
-            children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(SystemUpdateAlt_default.a, {})
-          }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(ListItemText_default.a, {
-            primary: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438"
-          })]
-        }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(link_default.a, {
+      }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(Divider_default.a, {}), /*#__PURE__*/Object(jsx_runtime_["jsx"])(List_default.a, {
+        children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(link_default.a, {
           href: "/resourses/add",
           children: /*#__PURE__*/Object(jsx_runtime_["jsxs"])(ListItem_default.a, {
             button: true,
@@ -698,14 +689,7 @@ const useNav = isAdmin => {
               primary: "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A"
             })]
           })
-        }), /*#__PURE__*/Object(jsx_runtime_["jsxs"])(ListItem_default.a, {
-          button: true,
-          children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(ListItemIcon_default.a, {
-            children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(AlarmAdd_default.a, {})
-          }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(ListItemText_default.a, {
-            primary: "\u0418\u0441\u0442\u043E\u0440\u0438\u044F \u043F\u0430\u0440\u0441\u0438\u043D\u0433\u0430"
-          })]
-        })]
+        })
       }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(Divider_default.a, {}), /*#__PURE__*/Object(jsx_runtime_["jsx"])(List_default.a, {
         children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(link_default.a, {
           href: "/politice",
@@ -764,13 +748,16 @@ const useNav = isAdmin => {
             primary: "\u0427\u0430\u0441\u0442\u044B\u0435 \u0432\u043E\u043F\u0440\u043E\u0441\u044B"
           })]
         })
-      }), /*#__PURE__*/Object(jsx_runtime_["jsxs"])(ListItem_default.a, {
-        button: true,
-        children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(ListItemIcon_default.a, {
-          children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(Contacts_default.a, {})
-        }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(ListItemText_default.a, {
-          primary: "\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B"
-        })]
+      }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(link_default.a, {
+        href: "/about",
+        children: /*#__PURE__*/Object(jsx_runtime_["jsxs"])(ListItem_default.a, {
+          button: true,
+          children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(ListItemIcon_default.a, {
+            children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(Contacts_default.a, {})
+          }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(ListItemText_default.a, {
+            primary: "\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B"
+          })]
+        })
       }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(link_default.a, {
         href: "/politice",
         children: /*#__PURE__*/Object(jsx_runtime_["jsxs"])(ListItem_default.a, {

@@ -65,20 +65,12 @@ const useNav = isAdmin => {
                 </List>
                 <Divider />
                 <List>
-                    <ListItem button>
-                        <ListItemIcon><SystemUpdateAltIcon /></ListItemIcon>
-                        <ListItemText primary="Источники" />
-                    </ListItem>
                     <Link href="/resourses/add">
                         <ListItem button>
                             <ListItemIcon><PlaylistAddIcon /></ListItemIcon>
                             <ListItemText primary="Добавить источник" />
                         </ListItem>
                     </Link>
-                    <ListItem button>
-                        <ListItemIcon><AlarmAddIcon /></ListItemIcon>
-                        <ListItemText primary="История парсинга" />
-                    </ListItem>
                 </List>
                 <Divider />
                 <List>
@@ -120,10 +112,12 @@ const useNav = isAdmin => {
                     <ListItemText primary="Частые вопросы" />
                 </ListItem>
             </Link>
-            <ListItem button>
-                <ListItemIcon><ContactsIcon /></ListItemIcon>
-                <ListItemText primary="Контакты" />
-            </ListItem>
+            <Link href="/about">
+                <ListItem button>
+                    <ListItemIcon><ContactsIcon /></ListItemIcon>
+                    <ListItemText primary="Контакты" />
+                </ListItem>
+            </Link>
             <Link href="/politice">
                 <ListItem button>
                     <ListItemIcon><DescriptionIcon /></ListItemIcon>

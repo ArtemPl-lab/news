@@ -1,4 +1,4 @@
-import { Container, Grid } from "@material-ui/core";
+import { Container, Grid, Typography } from "@material-ui/core";
 import NewsCard from "./NewsCard";
 import { useInView } from 'react-intersection-observer';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -46,6 +46,11 @@ const LikedNews = () => {
 
     return(
     <Container>
+        {
+            !postsStore.posts.length ?
+            <Typography><p>Увы, у вас нет понравившихся новостей :(</p></Typography> :
+            ""
+        }
         <Grid spacing={3} container>
           {postsStore.posts.map(post => {
               if(posts.indexOf(post._id) != -1){
