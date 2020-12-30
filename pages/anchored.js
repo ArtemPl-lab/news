@@ -30,8 +30,20 @@ function CustomToolbar(props) {
   const classes = useStyles();
   const handleDelete = async () => {
     const posts = api.current.getSelectedRows();
+    let allPosts = api.current.getRowModels();
+    allPosts = allPosts.filter(post => post.id && !posts.some(p => p.id === post.id));
+    allPosts = allPosts.map(post => post.data);
+    setR(allPosts);
     posts.forEach(post => {
-      console.log(post.id);
+      fetch('/api/news/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+          id: post.id
+        })
+      });
     });
   }
   const handleUnpin = async () => {

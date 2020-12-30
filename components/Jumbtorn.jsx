@@ -40,7 +40,7 @@ export default function Jumbtorn() {
     <ThemeProvider theme={theme}>
       <Paper className={`${classes.mainFeaturedPost} jumbtorn`} >
       {/* {<img style={{ display: 'none' }} src={post.image} alt={post.imageText} />} */}
-      <div className={classes.overlay} />
+      <div className="overlay-j" />
       <Grid container>
         <Grid item md={6}>
           <div className={`${classes.mainFeaturedPostContent} `}>

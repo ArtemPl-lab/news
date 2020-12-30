@@ -76,9 +76,9 @@ const NewsCard = ({post}) => {
         <IconButton aria-label="add to favorites"   color={post.isLiked ? "primary" : "action"} onClick={()=>postsStore.togleLike(post)}>
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="share">
+        {/* <IconButton aria-label="share">
           <ShareIcon />
-        </IconButton>
+        </IconButton> */}
         <Hidden only={['sm','md', 'lg']}>
           <IconButton
             className={clsx(classes.expand, {
